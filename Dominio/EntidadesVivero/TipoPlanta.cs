@@ -7,4 +7,5 @@ namespace Dominio.EntidadesVivero
     class TipoPlanta
     {
     }
+    
 }
