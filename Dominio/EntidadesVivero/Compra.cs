@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dominio.EntidadesVivero
+namespace Dominio.EntidadesVivero{ 
 
-
-public class Compra
-{
+    public abstract class Compra
+    {
+        public abstract decimal PrecioFinal();
+    }
 
 }

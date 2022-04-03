@@ -4,10 +4,7 @@ using System.Text;
 
 namespace Dominio.EntidadesVivero
 {
-	public class Iluminacion
-	{
-	public int id { get; set; }
-
-	public string tipoIluminacion { get; set; }
-	}
+    public class TipoAmbiente
+    {
+    }
 }
