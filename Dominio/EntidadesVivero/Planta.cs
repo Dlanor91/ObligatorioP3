@@ -6,7 +6,6 @@ namespace Dominio.EntidadesVivero
 {
     public class Planta
     {
-
         public int id { get; set; }
 
         public string nombreCientifico { get; set; }

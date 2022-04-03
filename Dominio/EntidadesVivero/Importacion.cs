@@ -1,15 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Dominio.EntidadesVivero
-
-
-public class Compra
 {
-
-    class Compra
+    public class Importacion
     {
+        
     }
-
 }
