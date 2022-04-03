@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dominio.EntidadesVivero
 {
-    class Compra
+   public class Compra
     {
     }
 }

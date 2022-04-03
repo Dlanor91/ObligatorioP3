@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dominio.InterfacesRepositorio
 {
-    interface ITipoPlanta
+    public interface ITipoPlanta
     {
     }
 }
