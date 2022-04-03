@@ -7,9 +7,21 @@ using Dominio.InterfacesRepositorio;
 
 namespace Repositorios
 {
-    class RepositorioTipoPlantaADO : IRepositorioTipoPlanta
+
+    public class RepositorioTipoPlantaADO : IRepositorioTipoPlanta   
+
     {
         public bool Add(TipoPlanta obj)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public TipoPlanta buscarTipoPlanta(string nombreTipo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool eliminarTipoPlanta(string nombreTipo)
         {
             throw new NotImplementedException();
         }
@@ -20,6 +32,11 @@ namespace Repositorios
         }
 
         public TipoPlanta FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool modificarDesripcionTipoPlanta(string nombreTipo)
         {
             throw new NotImplementedException();
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dominio.EntidadesVivero
 {
-    public class Importacion
+    public class Importacion:Compra
     {
         public static decimal tasaImportacionDGI { get; set; }
 
@@ -13,7 +13,6 @@ namespace Dominio.EntidadesVivero
         public static decimal descuentoAmericaSur { get; set; }
 
         public string descripcionSanitaria { get; set; }
-
 
         public override decimal PrecioFinal()
         {
