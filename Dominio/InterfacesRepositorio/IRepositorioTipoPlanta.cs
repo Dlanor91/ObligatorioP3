@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Dominio.EntidadesVivero;
 
 namespace Dominio.InterfacesRepositorio
 {
-    public interface ITipoPlanta
+    public interface IRepositorioTipoPlanta:IRepositorio<TipoPlanta>
     {
+
     }
 }
