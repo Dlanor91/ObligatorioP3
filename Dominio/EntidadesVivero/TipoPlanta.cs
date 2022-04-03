@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Dominio.EntidadesVivero
 {
-    class TipoPlanta
+    public class TipoPlanta
     {
+        
     }
 }
