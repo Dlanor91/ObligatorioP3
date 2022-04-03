@@ -6,6 +6,7 @@ namespace Dominio.EntidadesVivero
 {
    public abstract class Compra
     {
+
         public int id { get; set; }
 
         public DateTime fechaCompra { get; set; }
