@@ -6,7 +6,6 @@ namespace Dominio.EntidadesVivero
 {
     public class Planta
     {
-        private static int ultimoID = 1;
 
         public int id { get; set; }
 
