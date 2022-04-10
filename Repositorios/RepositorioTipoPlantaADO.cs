@@ -62,7 +62,41 @@ namespace Repositorios
 
         public IEnumerable<TipoPlanta> FindAll()
         {
-            throw new NotImplementedException();
+            List<TipoPlanta> tipoPlantas = new List<TipoPlanta>();
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "SELECT * FROM TipoPlanta;";
+            SqlCommand com = new SqlCommand(sql, con);
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    TipoPlanta tp = new TipoPlanta()
+                    {
+                        id = reader.GetInt32(0),
+                        nombre = reader.GetString(1),
+                        descripcionTipo = reader.GetString(2)                        
+                    };
+                    tipoPlantas.Add(tp);   
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarConexion(con);
+            }
+
+            return tipoPlantas;
         }
 
         public TipoPlanta FindById(int id)

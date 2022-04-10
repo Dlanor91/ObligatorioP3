@@ -8,6 +8,7 @@ namespace LogicaDeAplicacion
 {
     public interface IManejadorTipoPlantas
     {
+        public IEnumerable<TipoPlanta> MostrarTodosTiposPlantas();
         bool AgregarTipoPlanta(TipoPlanta tp);
     }
 }

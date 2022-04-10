@@ -7,7 +7,7 @@ using Repositorios;
 
 namespace LogicaDeAplicacion
 {
-    public class ManejadorTipoPlantas:IManejadorTipoPlantas
+    public class ManejadorTipoPlantas : IManejadorTipoPlantas
     {
         public IRepositorioTipoPlanta RepoTipoPlantas { get; set; }
 
@@ -16,9 +16,15 @@ namespace LogicaDeAplicacion
             RepoTipoPlantas=repoTipoPlantas;
         }
 
+        
         public bool AgregarTipoPlanta(TipoPlanta tp)
         {           
             return RepoTipoPlantas.Add(tp);
+        }
+
+        public IEnumerable<TipoPlanta> MostrarTodosTiposPlantas()
+        {
+            return RepoTipoPlantas.FindAll();
         }
     }
 }
