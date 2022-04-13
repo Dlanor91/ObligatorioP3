@@ -1,36 +1,35 @@
 ﻿@model Dominio.EntidadesVivero.TipoPlanta
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Insertar";
 }
 
-<h1>Create</h1>
+<h3>Nuevo Tipo de Planta</h3>
 
-<h4>TipoPlanta</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
             <div class="form-group">
-                <label asp-for="nombre" class="control-label"></label>
+                <label asp-for="nombre" class="control-label">Nombre</label>
                 <input asp-for="nombre" class="form-control" />
                 <span asp-validation-for="nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="descripcionTipo" class="control-label"></label>
+                <label asp-for="descripcionTipo" class="control-label">Descripción</label>
                 <input asp-for="descripcionTipo" class="form-control" />
                 <span asp-validation-for="descripcionTipo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Insertar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Mostrar Todos los Tipos de Planta</a>
 </div>
 
 @section Scripts {
