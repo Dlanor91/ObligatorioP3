@@ -185,7 +185,36 @@ namespace Repositorios
 
         public bool Update(TipoPlanta obj)
         {
-            throw new NotImplementedException();
+            bool tipoPlantaUpdate = false;
+            
+            SqlConnection con = Conexion.ObtenerConexion();
+            
+            string sql = "UPDATE TipoPlanta SET nombre=@nom, descripcionTipo=@desc WHERE id=@id;";
+            SqlCommand com = new SqlCommand(sql, con);
+
+            com.Parameters.AddWithValue("@id", obj.id);
+            com.Parameters.AddWithValue("@nom", obj.nombre);
+            com.Parameters.AddWithValue("@desc", obj.descripcionTipo);
+     
+            
+            try
+            {
+                Conexion.AbrirConexion(con);
+                int filasAfectadas = com.ExecuteNonQuery();
+                tipoPlantaUpdate = filasAfectadas == 1;
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return tipoPlantaUpdate;
+            
         }
     }
 }
