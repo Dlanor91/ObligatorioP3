@@ -16,5 +16,10 @@ namespace LogicaDeAplicacion
         {
             RepoPlantas = repoPlantas;
         }
+
+        public IEnumerable<Planta> MostrarTodasPlantas()
+        {
+            return RepoPlantas.FindAll();
+        }
     }
 }

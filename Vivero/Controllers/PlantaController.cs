@@ -24,7 +24,15 @@ namespace Vivero.Controllers
         // GET: PlantaController
         public ActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+                IEnumerable<Planta> pl = ManejadorPlanta.MostrarTodasPlantas();
+                return View(pl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: PlantaController/Details/5

@@ -8,6 +8,6 @@ namespace LogicaDeAplicacion
 {
     public interface IManejadorPlanta
     {
-        
+        public IEnumerable<Planta> MostrarTodasPlantas();
     }
 }
