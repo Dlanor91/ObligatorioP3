@@ -10,38 +10,45 @@
     <div class="col-sm text-sm-left">
         <p>
             <a asp-action="Create">Crear Nuevo</a>
-            <a asp-action="" >Buscar</a>
+            <a asp-action="">Buscar</a>
         </p>
-    </div>    
+    </div>
 </div>
-
-<table class="table">
-    <thead>
-        <tr>            
-            <th>
-               Nombre
-            </th>
-            <th>
-                Descripción
-            </th>            
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>            
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.descripcionTipo)
-            </td>
-            @*<td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.id}) |               
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
-            </td>*@
-        </tr>
+@if (Model.Count() == 0)
+{
+    <p>No hay registros para mostrar.</p>
 }
-    </tbody>
-</table>
+else
+{
 
-<p id="pMensaje">@ViewBag.Error</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcionTipo)
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id}) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

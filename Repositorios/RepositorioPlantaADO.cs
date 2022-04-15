@@ -46,22 +46,10 @@ namespace Repositorios
 
             SqlConnection con = Conexion.ObtenerConexion();
 
-            string sql = "select " +
-                         " pl.id, " +
-                         " pl.nombreCientifico," + 
-                         " pl.descripcionPlanta," +
-                         " pl.alturaMax," + 
-                         " pl.foto, " + 
-                         " ta.tipoAmbiente, " +
-                         " pl.frecuenciaRiego, " +
-                         " pl.temperatura, " + 
-                         " tp.nombre, " +
-                         " il.tipoIluminacion, " + 
-                         " pl.nombreVulgares " +
-                         "  from Planta pl " +
-            " left join TipoAmbiente ta on pl.tipoAmbiente = ta.id " +
-            " left join TipoPlanta tp on pl.tipoPlanta = tp.id " +
-            " left join Iluminacion il on pl.tipoIluminacion = il.id";
+            string sql = "select pl.id, pl.nombreCientifico, pl.descripcionPlanta, pl.alturaMax, pl.foto, ta.tipoAmbiente, pl.frecuenciaRiego, pl.temperatura, tp.nombre,il.tipoIluminacion,pl.nombreVulgares from Planta pl " +
+                         "left join TipoAmbiente ta on pl.tipoAmbiente = ta.id " +
+                         "left join TipoPlanta tp on pl.tipoPlanta = tp.id " +
+                         "left join Iluminacion il on pl.tipoIluminacion = il.id ";
             SqlCommand com = new SqlCommand(sql, con);
 
             try
@@ -80,9 +68,9 @@ namespace Repositorios
 
                 Conexion.CerrarConexion(con);
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -117,7 +105,7 @@ namespace Repositorios
 
         private Planta CrearPlanta(SqlDataReader reader)
         {
-            Planta p = null;
+            Planta p = new Planta();
             p.id = reader.GetInt32(0);
             p.nombreCientifico = reader.GetString(1);
             p.descripcionPlanta = reader.GetString(2);
