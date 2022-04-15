@@ -11,7 +11,16 @@ using Dominio.InterfacesRepositorio;
 namespace Vivero.Controllers
 {
     public class PlantaController : Controller
-    {        
+    {
+        
+        public IManejadorPlanta ManejadorPlanta { get; set; }
+        
+        public PlantaController(IManejadorPlanta manejadorPlanta)
+            {
+                ManejadorPlanta = manejadorPlanta;
+            }
+        
+        
         // GET: PlantaController
         public ActionResult Index()
         {

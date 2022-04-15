@@ -10,5 +10,7 @@ namespace Dominio.InterfacesRepositorio
     public interface IRepositorioCompra : IRepositorio<Compra>
     {
         
+  
+        
     }
 }
