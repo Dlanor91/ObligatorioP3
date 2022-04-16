@@ -3,12 +3,17 @@
     ViewData["Title"] = "Búsqueda - Nombre";
 }
 
-<h2>Búsqueda de Plantas por su Nombre o Nombres Vulgares</h2>
+<h2>Búsqueda de Plantas por Tipo de Ambiente</h2>
 <div class="row">
     <div class="col-md-4">
-        <form method="post" id="formBusqNombre">
+        <form method="post" id="formBusqTipoAmbiente">
             <div class="form-group">
-                <input type="text" id="nombreBusqPlanta" name="nombreBusqPlanta" class="form-control" />
+                <select name="busqTipoAmbiente" id="busqTipoAmbiente">
+                    <option value="0">Seleccione tipo de Ambiente</option>
+                    <option value="1">Interior</option>
+                    <option value="2">Exterior</option>
+                    <option value="3">Mixta</option>
+                </select>
             </div>
             <input type="submit" value="Buscar" />
         </form>
@@ -104,18 +109,18 @@ else
 
 @section Scripts{
     <script>
-        document.querySelector("#formBusqNombre").addEventListener('submit', evaluarBusqueda)
+        document.querySelector("#formBusqTipoAmbiente").addEventListener('submit', evaluarBusqueda)
 
         function evaluarBusqueda(evento) {
             evento.preventDefault();
-            let nombreBusqPlanta = document.querySelector("#nombreBusqPlanta").value;
+            let nombreBusqPlanta = document.querySelector("#busqTipoAmbiente").value;
 
-            if (nombreBusqPlanta != "") {
+            if (nombreBusqPlanta != "0") {
 
                 this.submit();
 
             } else {
-                document.querySelector("#pMensaje").innerHTML = "Complete el campo para poder realizar la búsqueda.";
+                document.querySelector("#pMensaje").innerHTML = "Seleccione un elemento de la lista para poder continuar.";
             }
 
         }
