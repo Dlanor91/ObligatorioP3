@@ -11,5 +11,6 @@ namespace LogicaDeAplicacion
         public IEnumerable<Planta> MostrarTodasPlantas();
         public IEnumerable<Planta> BusquedaNombre(string nombreBusqPlanta);
         public IEnumerable<Planta> buscarPlantasMenoresAlt(decimal alturaBuscar);
+        public IEnumerable<Planta> buscarPlantasMayoresAlt(decimal alturaBuscar);
     }
 }

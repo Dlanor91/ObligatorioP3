@@ -131,6 +131,48 @@ namespace Vivero.Controllers
                 return View();
             }
         }
+        
+        //Busqueda de Plantas mayor Altura
+        public ActionResult BusqMayorAltura()
+        {
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BusqMayorAltura(int busqAlturaMaxima)
+        {
+            try
+            {
+                if (busqAlturaMaxima == 0)
+                {
+                    throw new Exception("Complete el campo de búsqueda.");
+                }
+                else
+                {
+                    IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasMayoresAlt(busqAlturaMaxima);
+                    if (plEncontradas.Count() == 0)
+                    {
+                        throw new Exception("No se encontraron plantas mayor que " + busqAlturaMaxima + " cm.");
+                    }
+                    else
+                    {
+                        return View(plEncontradas);
+                    }                    
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
 
         // GET: PlantaController/Details/5
         public ActionResult Details(int id)
