@@ -30,15 +30,20 @@
             let contrasenia = document.querySelector("#contrasenia").value;
             @*Validacion email de usuario*@
             if (emailUsuario != "") {
-                @*Validacion contraseña*@
+                if (emailUsuario.indexOf("@@") == -1) {
+                    document.querySelector("#pMensaje").innerHTML = "El correo debe incluir al menos un @@ para que sea válido.";
+                }
+                else {
+                    @* Validacion contraseña *@
                 if (contrasenia == "") {
-                    document.querySelector("#pMensaje").innerHTML = "Complete el campo contraseña.";
-                } else {
-                    if (contrasenia.length < 6) {
-                        document.querySelector("#pMensaje").innerHTML = "La contraseña debe tener un mínimo de 6 caracteres.";
-                    }
-                    else {
-                        this.submit();
+                        document.querySelector("#pMensaje").innerHTML = "Complete el campo contraseña.";
+                    } else {
+                        if (contrasenia.length < 6) {
+                            document.querySelector("#pMensaje").innerHTML = "La contraseña debe tener un mínimo de 6 caracteres.";
+                        }
+                        else {
+                            this.submit();
+                        }
                     }
                 }
             } else {

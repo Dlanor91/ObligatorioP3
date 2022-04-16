@@ -116,22 +116,30 @@ namespace Vivero.Controllers
                 }
                 else
                 {
-                    if (contrasenia.Length<6) {
-                        throw new Exception("La contraseña debe tener un mínimo de 6 caracteres.");
+                    if (emailUsuario.IndexOf("@")==-1)
+                    {
+                        throw new Exception("Debe tener al menos un @ para que sea un email válido.");
                     }
                     else {
-                        Usuario logueado = ManejadorUsuario.IngresoExitoso(emailUsuario, contrasenia);
-                        if (logueado !=null)
+                        if (contrasenia.Length<6)
                         {
-                            HttpContext.Session.SetString("datosNombreUsuario", logueado.nombreUsuario);
-                            HttpContext.Session.SetString("datosNombreCompleto", logueado.Nombre + " " + logueado.Apellido);
-                            return RedirectToAction("Index", "Home");
+                            throw new Exception("La contraseña debe tener un mínimo de 6 caracteres.");
                         }
                         else
                         {
-                            throw new Exception("El email ingresado no está en nuestra base de batos o la contraseña es incorrecta, verifíquelo.");
+                            Usuario logueado = ManejadorUsuario.IngresoExitoso(emailUsuario, contrasenia);
+                            if (logueado !=null)
+                            {
+                                HttpContext.Session.SetString("datosNombreUsuario", logueado.nombreUsuario);
+                                HttpContext.Session.SetString("datosNombreCompleto", logueado.Nombre + " " + logueado.Apellido);
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                throw new Exception("El email ingresado no está en nuestra base de batos o la contraseña es incorrecta, verifíquelo.");
+                            }
                         }
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)
