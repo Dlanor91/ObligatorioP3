@@ -1,0 +1,123 @@
+@model IEnumerable<Dominio.EntidadesVivero.Planta>
+@{
+    ViewData["Title"] = "Búsqueda - Nombre";
+}
+
+<h2>Búsqueda de Plantas por su Nombre o Nombres Vulgares</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="formBusqNombre">
+            <div class="form-group">
+                <input type="text" id="nombreBusqPlanta" name="nombreBusqPlanta" class="form-control" />
+            </div>
+            <input type="submit" value="Buscar" />
+        </form>
+    </div>
+</div>
+
+
+@if (Model == null)
+{
+
+}
+else
+{
+    <p>
+        <a asp-action="Index">Mostrar Todos</a>
+        <a asp-action="Busquedas">Búsquedas</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre Científico
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Altura Máxima
+                </th>                
+                <th>
+                    Tipo de Ambiente
+                </th>                
+                <th>
+                    Tipo de Planta
+                </th>                
+                <th>
+                    Nombres Vulgares
+                </th>
+                <th>
+                    Foto
+                </th>
+                <th>                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombreCientifico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descripcionPlanta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.alturaMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipoAmbiente.tipoAmbiente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipoPlanta.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombresVulgares)
+                </td>
+                <td>
+                    <img src="~/jpg/@item.foto" alt="@item.nombreCientifico" title="@item.nombreCientifico" width="200" height="200" />
+                </td>                
+                <td>
+                    <p>
+                        <a class="btn btn-light" data-toggle="collapse" href="#collapseExample_@item.id" role="button" aria-expanded="false" aria-controls="collapseExample_@item.id">
+                            Ficha de Cuidados
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample_@item.id">
+                        <div class="card card-body">
+                            <p>Frecuencia de Riego : @Html.DisplayFor(modelItem => item.frecuenciaRiego)</p>
+                            <p>Iluminación : @Html.DisplayFor(modelItem => item.tipoIlumincacion.tipoIluminacion)</p>
+                            <p>Temperatura(°C) : @Html.DisplayFor(modelItem => item.temperatura)</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<p id="pMensaje">@ViewBag.Error</p>
+
+@section Scripts{
+    <script>
+        document.querySelector("#formBusqNombre").addEventListener('submit', evaluarBusqueda)
+
+        function evaluarBusqueda(evento) {
+            evento.preventDefault();
+            let nombreBusqPlanta = document.querySelector("#nombreBusqPlanta").value;
+
+            if (nombreBusqPlanta != "") {
+
+                this.submit();
+
+            } else {
+                document.querySelector("#pMensaje").innerHTML = "Complete el campo para poder realizar la búsqueda.";
+            }
+
+        }
+    </script>
+}

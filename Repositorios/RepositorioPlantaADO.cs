@@ -15,9 +15,46 @@ namespace Repositorios
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Planta> buscarAmbiente(int tipoAmbiente)
+        public IEnumerable<Planta> buscarPlantasTipoAmbiente(int tipoAmbiente)
         {
-            throw new NotImplementedException();
+            List<Planta> plantas = new List<Planta>();
+            
+            SqlConnection con = Conexion.ObtenerConexion();
+            
+            string sql = "select pl.id, pl.nombreCientifico, pl.descripcionPlanta, pl.alturaMax, pl.foto, ta.tipoAmbiente, pl.frecuenciaRiego, pl.temperatura, tp.nombre,il.tipoIluminacion,pl.nombreVulgares from Planta pl " +
+                         "left join TipoAmbiente ta on pl.tipoAmbiente = ta.id " +
+                         "left join TipoPlanta tp on pl.tipoPlanta = tp.id " +
+                         "left join Iluminacion il on pl.tipoIluminacion = il.id " +
+                         "where pl.tipoAmbiente = @tipoAmbiente;";
+            
+            SqlCommand com = new SqlCommand(sql, con);            
+            com.Parameters.AddWithValue("@tipoAmbiente", tipoAmbiente );
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Planta p = CrearPlanta(reader);
+                    p.tipoAmbiente = CrearTipoAmbiente(reader);
+                    p.tipoPlanta = CrearTipoPlanta(reader);
+                    p.tipoIlumincacion = CrearIluminacion(reader);
+                    plantas.Add(p);
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Conexion.CerrarConexion(con);
+            }
+            
+            return plantas;
         }
 
         public IEnumerable<Planta> buscarPlantaMayorAlt(decimal altura)

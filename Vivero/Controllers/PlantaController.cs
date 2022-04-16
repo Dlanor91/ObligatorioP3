@@ -89,6 +89,48 @@ namespace Vivero.Controllers
                 return View();
             }
         }
+        //busqueda por tipo de ambiente
+        public ActionResult BusqTipoAmbiente()
+        {
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        
+        }
+        
+        [HttpPost]
+        public ActionResult BusqTipoAmbiente(int idTipoAmbiente)
+        {
+            try
+            {
+                if (idTipoAmbiente == 0)
+                {
+                    throw new Exception("Complete el campo de búsqueda.");
+                }
+                else
+                {
+                    IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoAmbiente(idTipoAmbiente);
+                    if (plEncontradas.Count() == 0)
+                    {
+                        throw new Exception("No se encontraron plantas con ese criterio de búsqueda.");
+                    }
+                    else
+                    {
+                        return View(plEncontradas);
+                    }                    
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
 
         //Busqueda de Plantas por Altura menor que ciertas Plantas
         public ActionResult BusqMenorAltura()
@@ -108,7 +150,7 @@ namespace Vivero.Controllers
         {
             try
             {
-                if (busqAlturaMinima == 0)
+                 if (busqAlturaMinima == 0)
                 {
                     throw new Exception("Complete el campo de búsqueda.");
                 }

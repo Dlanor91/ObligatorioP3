@@ -36,5 +36,10 @@ namespace LogicaDeAplicacion
         {
             return RepoPlantas.buscarPlantaMayorAlt(alturaBuscar);
         }
+
+        public IEnumerable<Planta> buscarPlantasTipoAmbiente(int idTipoAmbiente)
+        {
+            return RepoPlantas.buscarPlantasTipoAmbiente(idTipoAmbiente);
+        }
     }
 }

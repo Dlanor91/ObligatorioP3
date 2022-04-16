@@ -9,7 +9,7 @@ namespace Dominio.InterfacesRepositorio
     {
         IEnumerable<Planta> buscarPlantaNombre(string nombreBusqPlanta);
         IEnumerable<Planta> buscarTipoPlanta(int TipoPlanta);
-        IEnumerable<Planta> buscarAmbiente(int tipoAmbiente);
+        IEnumerable<Planta> buscarPlantasTipoAmbiente(int tipoAmbiente);
         IEnumerable<Planta> buscarPlantaMenorAlt(decimal altura);
         IEnumerable<Planta> buscarPlantaMayorAlt(decimal altura);
     }
