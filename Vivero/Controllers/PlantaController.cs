@@ -104,17 +104,17 @@ namespace Vivero.Controllers
         }
         
         [HttpPost]
-        public ActionResult BusqTipoAmbiente(int idTipoAmbiente)
+        public ActionResult BusqTipoAmbiente(int busqTipoAmbiente)
         {
             try
             {
-                if (idTipoAmbiente == 0)
+                if (busqTipoAmbiente == 0)
                 {
                     throw new Exception("Complete el campo de búsqueda.");
                 }
                 else
                 {
-                    IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoAmbiente(idTipoAmbiente);
+                    IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoAmbiente(busqTipoAmbiente);
                     if (plEncontradas.Count() == 0)
                     {
                         throw new Exception("No se encontraron plantas con ese criterio de búsqueda.");
