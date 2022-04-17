@@ -105,23 +105,25 @@ else
 
 @section Scripts{
     <script>
-        document.querySelector("#formBusqAlturaMinima").addEventListener('submit', evaluarBusqueda)
+        document.querySelector("#formBusqAlturaMaxima").addEventListener('submit', evaluarBusqueda)
 
         function evaluarBusqueda(evento) {
             evento.preventDefault();
-            let busqAlturaMinima = document.querySelector("#busqAlturaMinima").value;
+            let busqAlturaMaxima = document.querySelector("#busqAlturaMaxima").value;
 
-            if (busqAlturaMinima != "") {
-                if (isNaN(busqAlturaMinima))
-                {
-                    document.querySelector("#pMensaje").innerHTML = "Solo se permiten números para poder realizar la búsqueda.";
-                }
-                else {
-                    this.submit();
-                }               
-
+            if (busqAlturaMaxima != "") {
+                if (busqAlturaMaxima < 0) {
+                    document.querySelector("#pMensaje").innerHTML = "Error Introduzca una altura mayor que 0.";
+                } else {
+                    if (isNaN(busqAlturaMaxima)) {
+                        document.querySelector("#pMensaje").innerHTML = "Error Solo se permiten números para poder realizar la búsqueda.";
+                    }
+                    else {
+                        this.submit();
+                    }
+                }  
             } else {
-                document.querySelector("#pMensaje").innerHTML = "Complete el campo para poder realizar la búsqueda.";
+                document.querySelector("#pMensaje").innerHTML = "Error Complete el campo para poder realizar la búsqueda.";
             }
 
         }

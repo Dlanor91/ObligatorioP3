@@ -112,13 +112,17 @@ else
             let busqAlturaMinima = document.querySelector("#busqAlturaMinima").value;
 
             if (busqAlturaMinima != "") {
-                if (isNaN(busqAlturaMinima))
-                {
-                    document.querySelector("#pMensaje").innerHTML = "Solo se permiten números para poder realizar la búsqueda.";
+                if (busqAlturaMinima<0) {
+                    document.querySelector("#pMensaje").innerHTML = "Error Introduzca una altura mayor que 0.";
+                } else {
+                    if (isNaN(busqAlturaMinima)) {
+                        document.querySelector("#pMensaje").innerHTML = "Solo se permiten números para poder realizar la búsqueda.";
+                    }
+                    else {
+                        this.submit();
+                    }
                 }
-                else {
-                    this.submit();
-                }               
+                            
 
             } else {
                 document.querySelector("#pMensaje").innerHTML = "Complete el campo para poder realizar la búsqueda.";
