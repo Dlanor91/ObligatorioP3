@@ -33,7 +33,7 @@ else
         <a asp-action="Index">Mostrar Todos</a>
         <a asp-action="Busquedas">Búsquedas</a>
     </p>
-    <table class="table">
+    <table class="table" id="tblTPlanta">
         <thead>
             <tr>
                 <th>
@@ -109,6 +109,7 @@ else
 
 <p id="pMensaje">@ViewBag.Error</p>
 
+
 @section Scripts{
     <script>
         document.querySelector("#formBusqTipoPlanta").addEventListener('submit', evaluarBusqueda)
@@ -122,6 +123,7 @@ else
                 this.submit();
 
             } else {
+                document.querySelector("#tblTPlanta").innerHTML = "";
                 document.querySelector("#pMensaje").innerHTML = "Seleccione un elemento de la lista para poder continuar.";
             }
 

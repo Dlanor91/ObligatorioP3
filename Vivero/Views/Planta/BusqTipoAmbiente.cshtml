@@ -10,9 +10,10 @@
             <div class="form-group">
                 <select name="busqTipoAmbiente" id="busqTipoAmbiente">
                     <option value="0">Seleccione Tipo de Ambiente</option>
-                    <option value="1">Interior</option>
-                    <option value="2">Exterior</option>
-                    <option value="3">Mixta</option>
+                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in ViewBag.TipoAmbientes)
+                    {
+                        <option value="@ta.id">@ta.tipoAmbiente</option>
+                    }
                 </select>
             </div>
             <input type="submit" value="Buscar" />
@@ -31,7 +32,7 @@ else
         <a asp-action="Index">Mostrar Todos</a>
         <a asp-action="Busquedas">Búsquedas</a>
     </p>
-    <table class="table">
+    <table class="table" id="tblAmbiente">
         <thead>
             <tr>
                 <th>
@@ -120,6 +121,7 @@ else
                 this.submit();
 
             } else {
+                document.querySelector("#tblAmbiente").innerHTML = "";
                 document.querySelector("#pMensaje").innerHTML = "Seleccione un elemento de la lista para poder continuar.";
             }
 

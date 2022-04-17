@@ -121,7 +121,7 @@ namespace Vivero.Controllers
                     IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoPlanta(busqTipoPlanta);
                     if (plEncontradas.Count() == 0)
                     {
-                        MostrarTipoPlanta();
+                        
                         throw new Exception("No se encontraron coincidencias con ese criterio de búsqueda.");
                     }
                     else
@@ -134,6 +134,7 @@ namespace Vivero.Controllers
             }
             catch (Exception ex)
             {
+                MostrarTipoPlanta();
                 ViewBag.Error = ex.Message;
                 return View();
             }
@@ -146,11 +147,20 @@ namespace Vivero.Controllers
             ViewBag.TipoPlantas = VMTipoPlantas.TipoPlanta;
         }
 
+        private void MostrarTipoAmbiente()
+        {
+            ViewModelPlanta VMTipoAmbiente = new ViewModelPlanta();
+            VMTipoAmbiente.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
+            ViewBag.TipoAmbientes = VMTipoAmbiente.TipoAmbiente;
+        }
+
+
         //busqueda por tipo de ambiente
         public ActionResult BusqTipoAmbiente()
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
+                MostrarTipoAmbiente();
                 return View();
             }
             else
@@ -174,16 +184,19 @@ namespace Vivero.Controllers
                     IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoAmbiente(busqTipoAmbiente);
                     if (plEncontradas.Count() == 0)
                     {
+                        
                         throw new Exception("No se encontraron plantas con ese criterio de búsqueda.");
                     }
                     else
                     {
+                        MostrarTipoAmbiente();
                         return View(plEncontradas);
                     }                    
                 }
             }
             catch (Exception ex)
             {
+                MostrarTipoAmbiente();
                 ViewBag.Error = ex.Message;
                 return View();
             }
