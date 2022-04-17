@@ -67,5 +67,10 @@ namespace LogicaDeAplicacion
         {
             return RepoIluminacion.FindAll();
         }
+
+        public bool AgregarPlanta(Planta p)
+        {
+            return RepoPlantas.Add(p);
+        }
     }
 }

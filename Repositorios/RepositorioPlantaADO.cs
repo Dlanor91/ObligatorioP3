@@ -12,7 +12,49 @@ namespace Repositorios
     {
         public bool Add(Planta obj)
         {
-            throw new NotImplementedException();
+            bool agregar = false;
+
+            SqlConnection con = Conexion.ObtenerConexion();
+            string sql = "INSERT INTO Planta VALUES(@nombre,@desc, @altura, @foto, @ambiente, @riego, @temp, @tipoPlanta, @tipoIlu, @nombresV);";
+            SqlCommand com = new SqlCommand(sql, con);
+
+            com.Parameters.AddWithValue("@nombre", obj.nombreCientifico);
+            com.Parameters.AddWithValue("@desc", obj.descripcionPlanta);
+            com.Parameters.AddWithValue("@altura", obj.alturaMax);
+            com.Parameters.AddWithValue("@foto", obj.foto);
+            com.Parameters.AddWithValue("@ambiente", obj.tipoAmbiente);
+            com.Parameters.AddWithValue("@riego", obj.frecuenciaRiego);
+            com.Parameters.AddWithValue("@temp", obj.temperatura);
+            com.Parameters.AddWithValue("@tipoPlanta", obj.tipoPlanta);
+            com.Parameters.AddWithValue("@tipoIlu", obj.tipoIlumincacion);
+            com.Parameters.AddWithValue("@nombresV", obj.nombresVulgares);
+            
+
+            SqlTransaction transaccion = null;
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                transaccion = con.BeginTransaction();
+                com.Transaction = transaccion;
+                int filasAfectadas = com.ExecuteNonQuery();
+                agregar = filasAfectadas == 1;
+                transaccion.Commit();
+                Conexion.CerrarConexion(con);
+
+            }
+            catch
+            {
+                if (transaccion != null) transaccion.Rollback();
+                agregar = false;
+
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return agregar;
         }
 
         public IEnumerable<Planta> buscarPlantasTipoAmbiente(int tipoAmbiente)

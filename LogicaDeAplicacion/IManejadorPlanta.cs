@@ -17,5 +17,6 @@ namespace LogicaDeAplicacion
         public IEnumerable<TipoPlanta> TraerTodosTiposPlantas();
         public IEnumerable<TipoAmbiente> TraerTodosTiposAmbientes();
         public IEnumerable<Iluminacion> TraerTodosIluminaciones();
+        public bool AgregarPlanta(Planta p);
     }
 }
