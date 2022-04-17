@@ -16,5 +16,6 @@ namespace LogicaDeAplicacion
         public IEnumerable<Planta> buscarPlantasTipoPlanta(int idTipoPlanta);
         public IEnumerable<TipoPlanta> TraerTodosTiposPlantas();
         public IEnumerable<TipoAmbiente> TraerTodosTiposAmbientes();
+        public IEnumerable<Iluminacion> TraerTodosIluminaciones();
     }
 }

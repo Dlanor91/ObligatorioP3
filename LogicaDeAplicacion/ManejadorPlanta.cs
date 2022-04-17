@@ -13,12 +13,14 @@ namespace LogicaDeAplicacion
         public IRepositorioPlantas RepoPlantas { get; set; }
         public IRepositorioTipoPlanta RepoTipoPlantas { get; set; }
         public IRepositorioTipoAmbiente RepoTipoAmbientes { get; set; }
+        public IRepositorioIluminacion RepoIluminacion { get; set; }
 
-        public ManejadorPlanta(IRepositorioPlantas repoPlantas, IRepositorioTipoPlanta repoTipoPlantas, IRepositorioTipoAmbiente repoTipoAmbientes)
+        public ManejadorPlanta(IRepositorioPlantas repoPlantas, IRepositorioTipoPlanta repoTipoPlantas, IRepositorioTipoAmbiente repoTipoAmbientes, IRepositorioIluminacion repoIluminacion)
         {
             RepoPlantas=repoPlantas;
             RepoTipoPlantas=repoTipoPlantas;
             RepoTipoAmbientes=repoTipoAmbientes;
+            RepoIluminacion=repoIluminacion;
         }
 
         public IEnumerable<Planta> MostrarTodasPlantas()
@@ -59,6 +61,11 @@ namespace LogicaDeAplicacion
         public IEnumerable<TipoAmbiente> TraerTodosTiposAmbientes()
         {
             return RepoTipoAmbientes.FindAll();
+        }
+
+        public IEnumerable<Iluminacion> TraerTodosIluminaciones()
+        {
+            return RepoIluminacion.FindAll();
         }
     }
 }
