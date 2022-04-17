@@ -52,7 +52,41 @@ namespace Repositorios
         
         public TipoPlanta buscarTipoPlanta(string nombreTipo)
         {
-            throw new NotImplementedException();
+            TipoPlanta tipoPlantaBuscada = null;
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "SELECT * FROM TipoPlanta WHERE nombre=@nombreTipo;";
+            SqlCommand com = new SqlCommand(sql, con);
+            com.Parameters.AddWithValue("@nombreTipo", nombreTipo);
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    tipoPlantaBuscada = new TipoPlanta()
+                    {
+                        id = reader.GetInt32(0),
+                        nombre = reader.GetString(1),
+                        descripcionTipo = reader.GetString(2)
+                    };
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return tipoPlantaBuscada;
         }
 
         public bool eliminarTipoPlanta(string nombreTipo)

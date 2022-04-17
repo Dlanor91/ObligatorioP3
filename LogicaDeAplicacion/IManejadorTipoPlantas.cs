@@ -13,5 +13,7 @@ namespace LogicaDeAplicacion
         bool ValidarNombreUnico(string nombreTP);
         bool ValidarFormatoNombre(string nombreTP);
         public TipoPlanta buscarUnaPlanta(int id);
+
+        public TipoPlanta buscarPlantaNombre(string nombreTP);
     }
 }

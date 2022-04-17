@@ -54,5 +54,10 @@ namespace LogicaDeAplicacion
         {
             return RepoTipoPlantas.FindById(id);
         }
+
+        public TipoPlanta buscarPlantaNombre(string nombreTP)
+        {
+            return RepoTipoPlantas.buscarTipoPlanta(nombreTP);
+        }
     }
 }
