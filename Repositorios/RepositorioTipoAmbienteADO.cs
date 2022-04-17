@@ -47,7 +47,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
 
             return tipoAmbiente;

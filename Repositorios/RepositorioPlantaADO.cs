@@ -51,7 +51,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
             
             return plantas;
@@ -92,7 +92,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
 
             return plantasMayores;
@@ -133,7 +133,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
 
             return plantasMenores;
@@ -175,7 +175,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
 
             return plantas;
@@ -183,7 +183,44 @@ namespace Repositorios
 
         public IEnumerable<Planta> buscarTipoPlanta(int TipoPlanta)
         {
-            throw new NotImplementedException();
+            List<Planta> plantas = new List<Planta>();
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "select pl.id, pl.nombreCientifico, pl.descripcionPlanta, pl.alturaMax, pl.foto, ta.tipoAmbiente, pl.frecuenciaRiego, pl.temperatura, tp.nombre,il.tipoIluminacion,pl.nombreVulgares from Planta pl " +
+                         "left join TipoAmbiente ta on pl.tipoAmbiente = ta.id " +
+                         "left join TipoPlanta tp on pl.tipoPlanta = tp.id " +
+                         "left join Iluminacion il on pl.tipoIluminacion = il.id " +
+                         "where pl.tipoPlanta = @tipoPlanta;";
+
+            SqlCommand com = new SqlCommand(sql, con);
+            com.Parameters.AddWithValue("@tipoPlanta", TipoPlanta);
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Planta p = CrearPlanta(reader);
+                    p.tipoAmbiente = CrearTipoAmbiente(reader);
+                    p.tipoPlanta = CrearTipoPlanta(reader);
+                    p.tipoIlumincacion = CrearIluminacion(reader);
+                    plantas.Add(p);
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return plantas;
         }
 
         public IEnumerable<Planta> FindAll()
@@ -220,7 +257,7 @@ namespace Repositorios
             }
             finally
             {
-                Conexion.CerrarConexion(con);
+                Conexion.CerrarYDisposeConexion(con);
             }
 
             return plantas;
