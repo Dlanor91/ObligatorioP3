@@ -30,17 +30,50 @@ namespace Dominio.EntidadesVivero
 
         public bool Validar()
         {
-            throw new NotImplementedException();
+            bool plantaValida = false;
+
+            if (nombreCientifico != null && descripcionPlanta != null && alturaMax > 0 && foto != null && tipoAmbiente != null && frecuenciaRiego != null && tipoPlanta != null && tipoIlumincacion != null && nombresVulgares != null)
+            {
+                plantaValida = true;
+            }
+
+            return plantaValida;
         }
+
 
         public bool ValidarDescripcion(string descripcion)
         {
-            throw new NotImplementedException();
+            bool descripcionValida = false;
+
+            if (descripcion.Length >= 10 && descripcion.Length <= 500)
+            {
+                descripcionValida = true;
+            }
+
+            return descripcionValida;
         }
+
 
         public bool ValidarFormatoNombre(string nombre)
         {
-            throw new NotImplementedException();
+            bool errorFormato = false;
+
+            if (nombre.Substring(0, 1) == " " || nombre.Substring(nombre.Length - 1, 1) == " ")
+            {
+                errorFormato = true;
+            }
+            else
+            {
+                for (int i = 0; i < nombre.Length && !errorFormato; i++)
+                {
+                    if (Char.IsNumber(nombre[i]) && Char.IsNumber(nombre[i]))
+                    {
+                        errorFormato = true;
+                    }
+                }
+            }
+
+            return errorFormato;
         }
     }
 }
