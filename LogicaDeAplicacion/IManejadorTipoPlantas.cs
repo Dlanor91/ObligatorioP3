@@ -14,5 +14,7 @@ namespace LogicaDeAplicacion
         public TipoPlanta buscarUnaPlanta(int id);
         public TipoPlanta buscarPlantaNombre(string nombreTP);
         public bool actDescripcionTipoPlanta(TipoPlanta tp);
+        public bool eliminarTipoPlanta(int id);
+
     }
 }

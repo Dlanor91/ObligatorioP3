@@ -89,11 +89,7 @@ namespace Repositorios
             return tipoPlantaBuscada;
         }
 
-        public bool eliminarTipoPlanta(string nombreTipo)
-        {
-            bool listo = false;
-            return listo;
-        }
+       
 
         public bool existeNombre(string nombreTipoPlanta)
         {
@@ -206,11 +202,7 @@ namespace Repositorios
 
             return tipoPlantaBuscada;
         }
-
-        public bool modificarDesripcionTipoPlanta(string nombreTipo)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool Remove(int id)
         {

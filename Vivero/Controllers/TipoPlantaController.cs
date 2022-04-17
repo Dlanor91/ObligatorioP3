@@ -14,13 +14,15 @@ namespace Vivero.Controllers
     {
 
         public IManejadorTipoPlantas ManejadorTipoPlantas { get; set; }
+        
+        public IManejadorPlanta ManejadorPlantas { get; set; }
 
-        public TipoPlantaController(IManejadorTipoPlantas manejadorTipoPlantas)
+        public TipoPlantaController(IManejadorTipoPlantas manejadorTipoPlantas, IManejadorPlanta manejadorPlantas)
         {
-            ManejadorTipoPlantas=manejadorTipoPlantas;
+            ManejadorTipoPlantas = manejadorTipoPlantas;
+            ManejadorPlantas = manejadorPlantas;
         }
-
-
+        
         // GET: TipoPlantaController, en el index listamos todos los tipos de planta disponible
         public ActionResult Index()
         {
@@ -216,8 +218,9 @@ namespace Vivero.Controllers
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
-                TipoPlanta tpEdit = ManejadorTipoPlantas.buscarUnaPlanta(id);
-                return View(tpEdit);
+                TipoPlanta tpEliminar = ManejadorTipoPlantas.buscarUnaPlanta(id);
+                
+                return View(tpEliminar);
             }
             else
             {
@@ -230,13 +233,38 @@ namespace Vivero.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            
+            // en caso positivo deuelve el objeto planta 
+            IEnumerable<Planta> existePlanta = ManejadorPlantas.buscarPlantasTipoPlanta(id);
+               
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (existePlanta.Count() == 0)
+                {
+                    //procede a eliminar
+                    bool eliminar = ManejadorTipoPlantas.eliminarTipoPlanta(id);
+                    if (eliminar)
+                    {
+                        return RedirectToAction(nameof(Index));
+
+                    }
+                    else
+                    {
+                        throw new Exception("No fue posible eliminar el tipo de planta ");
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("No fue posible eliminar el tipo de planta porque está en uso");
+
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                TipoPlanta tpEliminar = ManejadorTipoPlantas.buscarUnaPlanta(id);
+                return View(tpEliminar);
             }
         }
     }

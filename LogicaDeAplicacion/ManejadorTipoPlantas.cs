@@ -45,5 +45,10 @@ namespace LogicaDeAplicacion
         {
             return RepoTipoPlantas.Update(tp);
         }
+
+        public bool eliminarTipoPlanta(int id)
+        {
+            return RepoTipoPlantas.Remove(id);
+        }
     }
 }
