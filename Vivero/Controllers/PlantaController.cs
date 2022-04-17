@@ -89,6 +89,51 @@ namespace Vivero.Controllers
                 return View();
             }
         }
+
+        //Busqueda de Plantas por Tipo de Planta
+        public ActionResult BusqTipoPlanta()
+        {
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BusqTipoPlanta(int busqTipoPlanta)
+        {
+
+            try
+            {
+                if (busqTipoPlanta == 0)
+                {
+                    throw new Exception("Complete el campo de búsqueda.");
+                }
+                else
+                {
+                    IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasTipoPlanta(busqTipoPlanta);
+                    if (plEncontradas.Count() == 0)
+                    {
+                        throw new Exception("No se encontraron coincidencias con " + busqTipoPlanta + " .");
+                    }
+                    else
+                    {
+                        return View(plEncontradas);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
         //busqueda por tipo de ambiente
         public ActionResult BusqTipoAmbiente()
         {

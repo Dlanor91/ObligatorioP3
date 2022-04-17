@@ -41,5 +41,10 @@ namespace LogicaDeAplicacion
         {
             return RepoPlantas.buscarPlantasTipoAmbiente(idTipoAmbiente);
         }
+
+        public IEnumerable<Planta> buscarPlantasTipoPlanta(int idTipoPlanta)
+        {
+            return RepoPlantas.buscarTipoPlanta(idTipoPlanta);
+        }
     }
 }

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Dominio.EntidadesVivero.Planta>
+@{
+    ViewData["Title"] = "Búsqueda - Tipo Planta";
+}
+
+<h2>Búsqueda de Plantas por Tipo de Planta</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="formBusqTipoPlanta">
+            <div class="form-group">
+                <select name="busqTipoPlanta" id="busqTipoPlanta">
+                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in Model)
+                    {
+                        <option value="@tp.id">@tp.nombre</option>
+                    }
+                </select>
+            </div>
+            <input type="submit" value="Buscar" />
+        </form>
+    </div>
+</div>
+
+
+@if (Model == null)
+{
+
+}
+else
+{
+    <p>
+        <a asp-action="Index">Mostrar Todos</a>
+        <a asp-action="Busquedas">Búsquedas</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre Científico
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Altura Máxima
+                </th>
+                <th>
+                    Tipo de Ambiente
+                </th>
+                <th>
+                    Tipo de Planta
+                </th>
+                <th>
+                    Nombres Vulgares
+                </th>
+                <th>
+                    Foto
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombreCientifico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcionPlanta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.alturaMax)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoAmbiente.tipoAmbiente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoPlanta.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombresVulgares)
+                    </td>
+                    <td>
+                        <img src="~/jpg/@item.foto" alt="@item.nombreCientifico" title="@item.nombreCientifico" width="200" height="200" />
+                    </td>
+                    <td>
+                        <p>
+                            <a class="btn btn-light" data-toggle="collapse" href="#collapseExample_@item.id" role="button" aria-expanded="false" aria-controls="collapseExample_@item.id">
+                                Ficha de Cuidados
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample_@item.id">
+                            <div class="card card-body">
+                                <p>Frecuencia de Riego : @Html.DisplayFor(modelItem => item.frecuenciaRiego)</p>
+                                <p>Iluminación : @Html.DisplayFor(modelItem => item.tipoIlumincacion.tipoIluminacion)</p>
+                                <p>Temperatura(°C) : @Html.DisplayFor(modelItem => item.temperatura)</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<p id="pMensaje">@ViewBag.Error</p>
+
+@section Scripts{
+    <script>
+        document.querySelector("#formBusqTipoPlanta").addEventListener('submit', evaluarBusqueda)
+
+        function evaluarBusqueda(evento) {
+            evento.preventDefault();
+            let selectBusqueda = document.querySelector("#busqTipoPlanta").value;
+
+            if (selectBusqueda != "0") {
+
+                this.submit();
+
+            } else {
+                document.querySelector("#pMensaje").innerHTML = "Seleccione un elemento de la lista para poder continuar.";
+            }
+
+        }
+    </script>
+}
