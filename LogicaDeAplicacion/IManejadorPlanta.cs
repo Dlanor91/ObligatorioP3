@@ -18,5 +18,6 @@ namespace LogicaDeAplicacion
         public IEnumerable<TipoAmbiente> TraerTodosTiposAmbientes();
         public IEnumerable<Iluminacion> TraerTodosIluminaciones();
         public bool AgregarPlanta(Planta p);
+        public bool verificarNombreC(string nombreC);
     }
 }

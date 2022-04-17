@@ -154,6 +154,12 @@ namespace Vivero.Controllers
             ViewBag.TipoAmbientes = VMTipoAmbiente.TipoAmbiente;
         }
 
+        private void MostrarIluminacion()
+        {
+            ViewModelPlanta VMIluminacion = new ViewModelPlanta();
+            VMIluminacion.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
+            ViewBag.Iluminaciones = VMIluminacion.Iluminacion;
+        }
 
         //busqueda por tipo de ambiente
         public ActionResult BusqTipoAmbiente()
@@ -307,20 +313,73 @@ namespace Vivero.Controllers
         // GET: PlantaController/Create
         public ActionResult Create()
         {
-            return View();
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+
+                MostrarIluminacion();
+                MostrarTipoAmbiente();
+                MostrarTipoPlanta();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: PlantaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Planta plNew)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                bool validarNewTp = plNew.Validar();
+
+                if (validarNewTp)
+                {
+                    bool errorNombre = plNew.ValidarFormatoNombre(plNew.nombreCientifico);
+                    if (!errorNombre)
+                    {
+                        bool existeNombre = ManejadorPlanta.verificarNombreC(plNew.nombreCientifico);
+                        if (!existeNombre)
+                        {
+                            bool descripcionValida = plNew.ValidarDescripcion(plNew.descripcionPlanta);
+                            if (descripcionValida)
+                            {
+                                bool altaTP = ManejadorPlanta.AgregarPlanta(plNew);
+                                if (altaTP)
+                                {
+                                    return RedirectToAction(nameof(Index));
+                                }
+                                else
+                                {
+                                    throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception("El campo descripción debe estar entre 10 y 500 caracteres.");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("El nombre de la Planta ya existe en la base de datos, ingrese otro.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("El nombre de la Planta tiene espacios embebidos o tiene números, verifíquelo.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Complete todos los campos.");
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }

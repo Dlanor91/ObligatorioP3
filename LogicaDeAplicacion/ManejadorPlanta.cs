@@ -72,5 +72,10 @@ namespace LogicaDeAplicacion
         {
             return RepoPlantas.Add(p);
         }
+
+        public bool verificarNombreC(string nombreC)
+        {
+            return RepoPlantas.existeNombre(nombreC);
+        }
     }
 }

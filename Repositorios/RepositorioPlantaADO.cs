@@ -417,5 +417,39 @@ namespace Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public bool existeNombre(string nombreCPlanta)
+        {
+            bool plantaBuscada = false;
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "SELECT * FROM Planta WHERE nombreCientifico =@nombreCPlanta;";
+            SqlCommand com = new SqlCommand(sql, con);
+            com.Parameters.AddWithValue("@nombreCPlanta", nombreCPlanta);
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    plantaBuscada = true;
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return plantaBuscada;
+        }
     }
 }

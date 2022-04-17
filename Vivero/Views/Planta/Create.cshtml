@@ -1,0 +1,94 @@
+﻿@model Dominio.EntidadesVivero.Planta
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h3>Insertar una nueva Planta</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombreCientifico" class="control-label">Nombre </label>
+                <input asp-for="nombreCientifico" class="form-control" name="nombrePlanta" />
+                <span asp-validation-for="nombreCientifico" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="descripcionPlanta" class="control-label">Descripción </label>
+                <input asp-for="descripcionPlanta" class="form-control" name="descripcionPlanta" />
+                <span asp-validation-for="descripcionPlanta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="alturaMax" class="control-label">Altura </label>
+                <input asp-for="alturaMax" class="form-control" name="alturaPlanta" />
+                <span asp-validation-for="alturaMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="foto" class="control-label">Foto </label>
+                <input asp-for="foto" class="form-control" name="fotoPlanta" />
+                <span asp-validation-for="foto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="frecuenciaRiego" class="control-label">Frecuencia de Riego</label>
+                <input asp-for="frecuenciaRiego" class="form-control" name="riegoPlanta" />
+                <span asp-validation-for="frecuenciaRiego" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="temperatura" class="control-label">Temperatura </label>
+                <input asp-for="temperatura" class="form-control" name="tempPlanta" />
+                <span asp-validation-for="temperatura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombresVulgares" class="control-label">Nombres Vulgares</label>
+                <input asp-for="nombresVulgares" class="form-control" name="nombresVPlanta" />
+                <span asp-validation-for="nombresVulgares" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select name="busqTipoPlanta" id="busqTipoPlanta">
+                    <option value="0">Seleccione Tipo de Planta</option>
+                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in ViewBag.TipoPlantas)
+                    {
+                        <option value="@tp.id">@tp.nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="busqTipoAmbiente" id="busqTipoAmbiente">
+                    <option value="0">Seleccione Tipo de Ambiente</option>
+                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in ViewBag.TipoAmbientes)
+                    {
+                        <option value="@ta.id">@ta.tipoAmbiente</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="busqIluminacion" id="busqIluminacion">
+                    <option value="0">Seleccione Tipo de Planta</option>
+                    @foreach (Dominio.EntidadesVivero.Iluminacion ilu in ViewBag.Iluminaciones)
+                    {
+                        <option value="@ilu.id">@ilu.tipoIluminacion</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Insertar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Mostrar todas las Plantas</a>
+</div>
+
+
+<p id="pMensaje">@ViewBag.Error</p>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
