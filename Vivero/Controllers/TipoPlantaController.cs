@@ -36,6 +36,51 @@ namespace Vivero.Controllers
             
         }
 
+        public ActionResult Busqueda()
+        {
+            if (HttpContext.Session.GetString("datosNombreUsuario") != null)
+            {
+                
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Busqueda(string nombreTP)
+        {
+            try
+            {
+                if (nombreTP == null)
+                {
+                    throw new Exception("Complete el campo de búsqueda.");
+                }
+                else
+                {
+                    TipoPlanta tp = ManejadorTipoPlantas.buscarPlantaNombre(nombreTP);
+                    if (tp == null)
+                    {
+                        throw new Exception("No se encontraron coincidencias con " + nombreTP + " .");
+                    }
+                    else
+                    {
+                        return View(tp);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+           
+        }
+
         // GET: TipoPlantaController/Details/5
         public ActionResult Details(int id)
         {

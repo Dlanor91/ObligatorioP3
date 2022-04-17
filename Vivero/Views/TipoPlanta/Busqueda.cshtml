@@ -1,0 +1,62 @@
+﻿@model Dominio.EntidadesVivero.TipoPlanta
+
+@{
+    ViewData["Title"] = "Busqueda - Tipo Nombre";
+}
+
+<h2>Búsqueda de Tipo de Plantas por su Nombre</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="formBusqNombre">
+            <div class="form-group">
+                <input type="text" id="nombreTP" name="nombreTP" class="form-control" />
+            </div>
+            <input type="submit" value="Buscar" />
+        </form>
+    </div>
+</div>
+
+@if (Model == null)
+{
+
+}
+else
+{
+    <p>
+        <a asp-action="Index">Mostrar Todos</a>
+     
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+          
+                <tr>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.descripcionTipo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id=Model.id}) |
+                 
+                        @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+           
+        </tbody>
+    </table>
+}
+
+<p id="pMensaje">@ViewBag.Error</p>
