@@ -63,8 +63,7 @@ namespace Vivero.Controllers
 
         [HttpPost]
         public ActionResult BusqPorNombre(string nombreBusqPlanta)
-        {
-            
+        {            
             try
             {
                 if (nombreBusqPlanta == null)
@@ -73,6 +72,7 @@ namespace Vivero.Controllers
                 }
                 else
                 {
+                    nombreBusqPlanta = nombreBusqPlanta.Trim();
                     IEnumerable<Planta> plEncontradas = ManejadorPlanta.BusquedaNombre(nombreBusqPlanta);
                     if (plEncontradas.Count() == 0)
                     {
@@ -239,7 +239,7 @@ namespace Vivero.Controllers
                         IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasMenoresAlt(busqAlturaMinima);
                         if (plEncontradas.Count() == 0)
                         {
-                            throw new Exception("No se encontraron plantas menor que " + busqAlturaMinima + " cm.");
+                            throw new Exception("No se encontraron plantas menores que " + busqAlturaMinima + " cm.");
                         }
                         else
                         {
@@ -288,7 +288,7 @@ namespace Vivero.Controllers
                         IEnumerable<Planta> plEncontradas = ManejadorPlanta.buscarPlantasMayoresAlt(busqAlturaMaxima);
                         if (plEncontradas.Count() == 0)
                         {
-                            throw new Exception("No se encontraron plantas mayor que " + busqAlturaMaxima + " cm.");
+                            throw new Exception("No se encontraron plantas mayores que " + busqAlturaMaxima + " cm.");
                         }
                         else
                         {

@@ -64,6 +64,7 @@ namespace Vivero.Controllers
                 }
                 else
                 {
+                    nombreTP = nombreTP.Trim();
                     TipoPlanta tp = ManejadorTipoPlantas.buscarPlantaNombre(nombreTP);
                     if (tp == null)
                     {
