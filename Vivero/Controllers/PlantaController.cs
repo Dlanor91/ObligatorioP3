@@ -336,41 +336,46 @@ namespace Vivero.Controllers
             {
                 bool validarNewTp = plNew.Validar();
 
-                if (!validarNewTp && VMPlanta.idIluminacion == 0 && VMPlanta.idTipoAmbiente == 0 && VMPlanta.idTipoPlanta == 0)
+                if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0)
                 {
-                    bool errorNombre = plNew.ValidarFormatoNombre(plNew.nombreCientifico);
-                    if (!errorNombre)
-                    {
-                        bool existeNombre = ManejadorPlanta.verificarNombreC(plNew.nombreCientifico);
-                        if (!existeNombre)
+                    if (plNew.alturaMax <= 0) {
+                        throw new Exception("La altura máxima no puede ser menor que 0cm.");
+                    } 
+                    else {
+                        bool errorNombre = plNew.ValidarFormatoNombre(plNew.nombreCientifico);
+                        if (!errorNombre)
                         {
-                            bool descripcionValida = plNew.ValidarDescripcion(plNew.descripcionPlanta);
-                            if (descripcionValida)
+                            bool existeNombre = ManejadorPlanta.verificarNombreC(plNew.nombreCientifico);
+                            if (!existeNombre)
                             {
-                                bool altaTP = ManejadorPlanta.AgregarPlanta(plNew);
-                                if (altaTP)
+                                bool descripcionValida = plNew.ValidarDescripcion(plNew.descripcionPlanta);
+                                if (descripcionValida)
                                 {
-                                    return RedirectToAction(nameof(Index));
+                                    bool altaTP = ManejadorPlanta.AgregarPlanta(plNew);
+                                    if (altaTP)
+                                    {
+                                        return RedirectToAction(nameof(Index));
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                    }
                                 }
                                 else
                                 {
-                                    throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                    throw new Exception("El campo descripción debe estar entre 10 y 500 caracteres.");
                                 }
                             }
                             else
                             {
-                                throw new Exception("El campo descripción debe estar entre 10 y 500 caracteres.");
+                                throw new Exception("El nombre de la Planta ya existe en la base de datos, ingrese otro.");
                             }
                         }
                         else
                         {
-                            throw new Exception("El nombre de la Planta ya existe en la base de datos, ingrese otro.");
+                            throw new Exception("El nombre de la Planta tiene espacios embebidos o tiene números, verifíquelo.");
                         }
-                    }
-                    else
-                    {
-                        throw new Exception("El nombre de la Planta tiene espacios embebidos o tiene números, verifíquelo.");
-                    }
+                    }                    
                 }
                 else
                 {
