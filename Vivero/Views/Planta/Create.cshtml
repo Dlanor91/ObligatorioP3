@@ -1,4 +1,4 @@
-﻿@model Dominio.EntidadesVivero.Planta
+﻿@model Vivero.Models.ViewModelPlanta;
 
 @{
     ViewData["Title"] = "Create";
@@ -13,44 +13,43 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="nombreCientifico" class="control-label">Nombre </label>
-                <input asp-for="nombreCientifico" class="form-control" id="nombrePlanta" />
-                <span asp-validation-for="nombreCientifico" class="text-danger"></span>
+                <label asp-for="Planta.nombreCientifico" class="control-label">Nombre </label>
+                <input asp-for="Planta.nombreCientifico" class="form-control" id="nombrePlanta" />
+                <span asp-validation-for="Planta.nombreCientifico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="descripcionPlanta" class="control-label">Descripción </label>
-                <textarea asp-for="descripcionPlanta" class="form-control" id="descripcionPlanta" rows="5" cols="5"></textarea>                
-                <span asp-validation-for="descripcionPlanta" class="text-danger"></span>
+                <label asp-for="Planta.descripcionPlanta" class="control-label">Descripción </label>
+                <textarea asp-for="Planta.descripcionPlanta" class="form-control" id="descripcionPlanta" rows="5" cols="5"></textarea>
+                <span asp-validation-for="Planta.descripcionPlanta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="alturaMax" class="control-label">Altura </label>
-                <input asp-for="alturaMax" class="form-control" id="alturaMax" />
-                <span asp-validation-for="alturaMax" class="text-danger"></span>
+                <label asp-for="Planta.alturaMax" class="control-label">Altura </label>
+                <input asp-for="Planta.alturaMax" class="form-control" id="alturaMax" />
+                <span asp-validation-for="Planta.alturaMax" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label asp-for="Planta.frecuenciaRiego" class="control-label">Frecuencia de Riego</label>
+                <input asp-for="Planta.frecuenciaRiego" class="form-control" id="riegoPlanta" />
+                <span asp-validation-for="Planta.frecuenciaRiego" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="foto" class="control-label">Foto </label>
-                <input asp-for="foto" class="form-control" id="fotoPlanta" />
-                <span asp-validation-for="foto" class="text-danger"></span>
+                <label asp-for="Planta.temperatura" class="control-label">Temperatura </label>
+                <input asp-for="Planta.temperatura" class="form-control" id="tempPlanta" />
+                <span asp-validation-for="Planta.temperatura" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="frecuenciaRiego" class="control-label">Frecuencia de Riego</label>
-                <input asp-for="frecuenciaRiego" class="form-control" id="riegoPlanta" />
-                <span asp-validation-for="frecuenciaRiego" class="text-danger"></span>
+                <label asp-for="Planta.nombresVulgares" class="control-label">Nombres Vulgares</label>
+                <textarea asp-for="Planta.nombresVulgares" class="form-control" id="nombresVulgares" rows="5" cols="5"></textarea>
+                <span asp-validation-for="Planta.nombresVulgares" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="temperatura" class="control-label">Temperatura </label>
-                <input asp-for="temperatura" class="form-control" id="tempPlanta" />
-                <span asp-validation-for="temperatura" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nombresVulgares" class="control-label">Nombres Vulgares</label>
-                <textarea asp-for="nombresVulgares" class="form-control" id="nombresVulgares" rows="5" cols="5"></textarea>                
-                <span asp-validation-for="nombresVulgares" class="text-danger"></span>
+                <label>Imagen</label>
+                <input asp-for="Imagen" class="form-control"/>
             </div>
             <div class="form-group">
                 <select name="idTipoPlanta" id="idTipoPlanta">
                     <option value="0">Seleccione Tipo de Planta</option>
-                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in ViewBag.TipoPlantas)
+                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in Model.TipoPlanta)
                     {
                         <option value="@tp.id">@tp.nombre</option>
                     }
@@ -59,7 +58,7 @@
             <div class="form-group">
                 <select name="idTipoAmbiente" id="idTipoAmbiente">
                     <option value="0">Seleccione Tipo de Ambiente</option>
-                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in ViewBag.TipoAmbientes)
+                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in Model.TipoAmbiente)
                     {
                         <option value="@ta.id">@ta.tipoAmbiente</option>
                     }
@@ -68,7 +67,7 @@
             <div class="form-group">
                 <select name="idIluminacion" id="idIluminacion">
                     <option value="0">Seleccione Tipo de Planta</option>
-                    @foreach (Dominio.EntidadesVivero.Iluminacion ilu in ViewBag.Iluminaciones)
+                    @foreach (Dominio.EntidadesVivero.Iluminacion ilu in Model.Iluminacion)
                     {
                         <option value="@ilu.id">@ilu.tipoIluminacion</option>
                     }

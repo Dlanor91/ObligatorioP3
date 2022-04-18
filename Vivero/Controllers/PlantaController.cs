@@ -9,6 +9,7 @@ using Dominio.EntidadesVivero;
 using Dominio.InterfacesRepositorio;
 using Microsoft.AspNetCore.Hosting;
 using Vivero.Models;
+using System.IO;
 
 namespace Vivero.Controllers
 {
@@ -16,13 +17,14 @@ namespace Vivero.Controllers
     {
         
         public IManejadorPlanta ManejadorPlanta { get; set; }
-        
-        public PlantaController(IManejadorPlanta manejadorPlanta)
-            {
-                ManejadorPlanta = manejadorPlanta;
-            }
-        
-        
+        public IWebHostEnvironment WebHostEnvironment { get; set; }
+
+        public PlantaController(IManejadorPlanta manejadorPlanta, IWebHostEnvironment webHostEnvironment)
+        {
+            ManejadorPlanta=manejadorPlanta;
+            WebHostEnvironment=webHostEnvironment;
+        }
+
         // GET: PlantaController
         public ActionResult Index()
         {
@@ -159,7 +161,7 @@ namespace Vivero.Controllers
             ViewModelPlanta VMIluminacion = new ViewModelPlanta();
             VMIluminacion.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
             ViewBag.Iluminaciones = VMIluminacion.Iluminacion;
-        }
+        }        
 
         //busqueda por tipo de ambiente
         public ActionResult BusqTipoAmbiente()
@@ -315,11 +317,11 @@ namespace Vivero.Controllers
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
-
-                MostrarIluminacion();
-                MostrarTipoAmbiente();
-                MostrarTipoPlanta();
-                return View();
+                ViewModelPlanta VMPlanta = new ViewModelPlanta();
+                VMPlanta.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
+                VMPlanta.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
+                VMPlanta.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
+                return View(VMPlanta);
             }
             else
             {
@@ -330,30 +332,39 @@ namespace Vivero.Controllers
         // POST: PlantaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Planta plNew, ViewModelPlanta VMPlanta)
+        public ActionResult Create(Planta tpnew,ViewModelPlanta VMPlanta)
         {
             try
             {
-                bool validarNewTp = plNew.Validar();
+                bool validarNewTp = VMPlanta.Planta.Validar();
 
                 if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0)  
                 {
-                    if (plNew.alturaMax <= 0) {
+                    if (VMPlanta.Planta.alturaMax <= 0) {
                         throw new Exception("La altura máxima no puede ser menor que 0cm.");
                     } 
                     else {
-                        bool errorNombre = plNew.ValidarFormatoNombre(plNew.nombreCientifico);
+                        bool errorNombre = VMPlanta.Planta.ValidarFormatoNombre(VMPlanta.Planta.nombreCientifico);
                         if (!errorNombre)
                         {
-                            bool existeNombre = ManejadorPlanta.verificarNombreC(plNew.nombreCientifico);
+                            bool existeNombre = ManejadorPlanta.verificarNombreC(VMPlanta.Planta.nombreCientifico);
                             if (!existeNombre)
                             {
-                                bool descripcionValida = plNew.ValidarDescripcion(plNew.descripcionPlanta);
+                                bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta);
                                 if (descripcionValida)
-                                {     
-                                    bool altaTP = ManejadorPlanta.AgregarPlanta(plNew,VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
+                                {
+                                    
+                                    string nomArchivo = VMPlanta.Imagen.FileName;
+                                    nomArchivo += "001";
+                                    VMPlanta.Planta.foto = nomArchivo;
+                                    bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta,VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
                                     if (altaTP)
                                     {
+                                        string rutaRaiz = WebHostEnvironment.WebRootPath;
+                                        string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
+                                        string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
+                                        FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
+                                        VMPlanta.Imagen.CopyTo(stream);
                                         return RedirectToAction(nameof(Index));
                                     }
                                     else
@@ -386,7 +397,7 @@ namespace Vivero.Controllers
             {
                 MostrarIluminacion();
                 MostrarTipoAmbiente();
-                MostrarTipoPlanta();
+                MostrarTipoPlanta();                
                 ViewBag.Error = ex.Message;
                 return View();
             }

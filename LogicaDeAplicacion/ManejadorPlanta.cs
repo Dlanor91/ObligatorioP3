@@ -70,14 +70,20 @@ namespace LogicaDeAplicacion
 
         public bool AgregarPlanta(Planta p, int idTipoPlanta, int idTipoAmbiente, int idIluminacion)
         {
+            bool puedeAgregar = false;
+            
             TipoPlanta tp = RepoTipoPlantas.FindById(idTipoPlanta);
             TipoAmbiente tipoAmb = RepoTipoAmbientes.FindById(idTipoAmbiente);
             Iluminacion ilum = RepoIluminacion.FindById(idIluminacion);
 
-            p.tipoPlanta = tp;
-            p.tipoAmbiente = tipoAmb;
-            p.tipoIlumincacion = ilum;
-            return RepoPlantas.Add(p);
+            if (tp != null && tipoAmb !=null && ilum !=null) {
+                p.tipoPlanta = tp;
+                p.tipoAmbiente = tipoAmb;
+                p.tipoIlumincacion = ilum;
+                puedeAgregar = RepoPlantas.Add(p);               
+            }          
+           
+            return puedeAgregar;
         }
 
         public bool verificarNombreC(string nombreC)
