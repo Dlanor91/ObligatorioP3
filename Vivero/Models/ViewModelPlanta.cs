@@ -16,6 +16,6 @@ namespace Vivero.Models
         public int idTipoPlanta { get; set; }
         public int idTipoAmbiente { get; set; }
         public int idIluminacion { get; set; }
-        public IFormFile Imagen { get; set; }
+        public IFormFile Foto { get; set; }
     }
 }

@@ -332,7 +332,7 @@ namespace Vivero.Controllers
         // POST: PlantaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Planta tpnew,ViewModelPlanta VMPlanta)
+        public ActionResult Create(ViewModelPlanta VMPlanta)
         {
             try
             {
@@ -354,8 +354,7 @@ namespace Vivero.Controllers
                                 if (descripcionValida)
                                 {
                                     
-                                    string nomArchivo = VMPlanta.Imagen.FileName;
-                                    nomArchivo += "001";
+                                    string nomArchivo = VMPlanta.Foto.FileName;                                    
                                     VMPlanta.Planta.foto = nomArchivo;
                                     bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta,VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
                                     if (altaTP)
@@ -364,7 +363,7 @@ namespace Vivero.Controllers
                                         string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
                                         string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
                                         FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
-                                        VMPlanta.Imagen.CopyTo(stream);
+                                        VMPlanta.Foto.CopyTo(stream);
                                         return RedirectToAction(nameof(Index));
                                     }
                                     else
@@ -393,13 +392,13 @@ namespace Vivero.Controllers
                     throw new Exception("Complete todos los campos.");
                 }
             }
-            catch (Exception ex)
-            {
-                MostrarIluminacion();
-                MostrarTipoAmbiente();
-                MostrarTipoPlanta();                
+            catch (Exception ex)            
+            {                
+                VMPlanta.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
+                VMPlanta.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
+                VMPlanta.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
                 ViewBag.Error = ex.Message;
-                return View();
+                return View(VMPlanta);
             }
         }
 
