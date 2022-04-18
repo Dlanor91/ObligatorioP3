@@ -22,11 +22,11 @@ namespace Repositorios
             com.Parameters.AddWithValue("@desc", obj.descripcionPlanta);
             com.Parameters.AddWithValue("@altura", obj.alturaMax);
             com.Parameters.AddWithValue("@foto", obj.foto);
-            com.Parameters.AddWithValue("@ambiente", obj.tipoAmbiente);
+            com.Parameters.AddWithValue("@ambiente", obj.tipoAmbiente.id);
             com.Parameters.AddWithValue("@riego", obj.frecuenciaRiego);
             com.Parameters.AddWithValue("@temp", obj.temperatura);
-            com.Parameters.AddWithValue("@tipoPlanta", obj.tipoPlanta);
-            com.Parameters.AddWithValue("@tipoIlu", obj.tipoIlumincacion);
+            com.Parameters.AddWithValue("@tipoPlanta", obj.tipoPlanta.id);
+            com.Parameters.AddWithValue("@tipoIlu", obj.tipoIlumincacion.id);
             com.Parameters.AddWithValue("@nombresV", obj.nombresVulgares);
             
 

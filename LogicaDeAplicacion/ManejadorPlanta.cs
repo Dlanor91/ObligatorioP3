@@ -68,8 +68,15 @@ namespace LogicaDeAplicacion
             return RepoIluminacion.FindAll();
         }
 
-        public bool AgregarPlanta(Planta p)
+        public bool AgregarPlanta(Planta p, int idTipoPlanta, int idTipoAmbiente, int idIluminacion)
         {
+            TipoPlanta tp = RepoTipoPlantas.FindById(idTipoPlanta);
+            TipoAmbiente tipoAmb = RepoTipoAmbientes.FindById(idTipoAmbiente);
+            Iluminacion ilum = RepoIluminacion.FindById(idIluminacion);
+
+            p.tipoPlanta = tp;
+            p.tipoAmbiente = tipoAmb;
+            p.tipoIlumincacion = ilum;
             return RepoPlantas.Add(p);
         }
 

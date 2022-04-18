@@ -350,8 +350,8 @@ namespace Vivero.Controllers
                             {
                                 bool descripcionValida = plNew.ValidarDescripcion(plNew.descripcionPlanta);
                                 if (descripcionValida)
-                                {
-                                    bool altaTP = ManejadorPlanta.AgregarPlanta(plNew);
+                                {     
+                                    bool altaTP = ManejadorPlanta.AgregarPlanta(plNew,VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
                                     if (altaTP)
                                     {
                                         return RedirectToAction(nameof(Index));

@@ -55,7 +55,40 @@ namespace Repositorios
 
         public TipoAmbiente FindById(int id)
         {
-            throw new NotImplementedException();
+            TipoAmbiente tipoAmbienteBuscado = null;
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "SELECT * FROM TipoAmbiente WHERE id=@id;";
+            SqlCommand com = new SqlCommand(sql, con);
+            com.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    tipoAmbienteBuscado = new TipoAmbiente()
+                    {
+                        id = reader.GetInt32(0),
+                        tipoAmbiente = reader.GetString(1)                        
+                    };
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return tipoAmbienteBuscado;
         }
 
         public bool Remove(int id)

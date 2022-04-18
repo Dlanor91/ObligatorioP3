@@ -120,7 +120,40 @@ namespace Repositorios
 
         public Iluminacion FindById(int id)
         {
-            throw new NotImplementedException();
+            Iluminacion iluminacionBuscada = null;
+
+            SqlConnection con = Conexion.ObtenerConexion();
+
+            string sql = "SELECT * FROM Iluminacion WHERE id=@id;";
+            SqlCommand com = new SqlCommand(sql, con);
+            com.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                Conexion.AbrirConexion(con);
+                SqlDataReader reader = com.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    iluminacionBuscada = new Iluminacion()
+                    {
+                        id = reader.GetInt32(0),
+                        tipoIluminacion = reader.GetString(1)                       
+                    };
+                }
+
+                Conexion.CerrarConexion(con);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Conexion.CerrarYDisposeConexion(con);
+            }
+
+            return iluminacionBuscada;
         }
     }
 }
