@@ -130,8 +130,7 @@ namespace Vivero.Controllers
                             Usuario logueado = ManejadorUsuario.IngresoExitoso(emailUsuario, contrasenia);
                             if (logueado !=null)
                             {
-                                HttpContext.Session.SetString("datosNombreUsuario", logueado.nombreUsuario);
-                                HttpContext.Session.SetString("datosNombreCompleto", logueado.Nombre + " " + logueado.Apellido);
+                                HttpContext.Session.SetString("datosNombreUsuario", logueado.Email);                                
                                 return RedirectToAction("Index", "Home");
                             }
                             else
