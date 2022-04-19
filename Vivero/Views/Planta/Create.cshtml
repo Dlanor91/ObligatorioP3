@@ -9,8 +9,10 @@
 <h3>Insertar una nueva Planta</h3>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" id="crearPlanta">
+    <div class="col-md-4">      
+
+        <form asp-action="Create" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Planta.nombreCientifico" class="control-label">Nombre </label>
@@ -44,7 +46,11 @@
             </div>
             <div class="form-group">
                 <label>Imagen</label>
+
                 <input asp-for="Imagen" type="file" class="form-control" id="fotoP" /> 
+
+                <input asp-for="Foto" class="form-control"/>
+
             </div>
             <div class="form-group">
                 <select name="idTipoPlanta" id="idTipoPlanta">
