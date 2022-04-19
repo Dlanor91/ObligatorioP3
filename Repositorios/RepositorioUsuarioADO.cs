@@ -44,10 +44,7 @@ namespace Repositorios
                 {
                     ingresado = new Usuario()
                     {
-                        nombreUsuario = reader.GetString(1),
-                        Email = reader.GetString(2),
-                        Nombre = reader.GetString(4),
-                        Apellido = reader.GetString(5),
+                        Email = reader.GetString(1),                       
                     };
                 }
 
