@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="crearPlanta">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Planta.nombreCientifico" class="control-label">Nombre </label>
@@ -26,7 +26,7 @@
                 <label asp-for="Planta.alturaMax" class="control-label">Altura </label>
                 <input asp-for="Planta.alturaMax" class="form-control" id="alturaMax" />
                 <span asp-validation-for="Planta.alturaMax" class="text-danger"></span>
-            </div>           
+            </div>
             <div class="form-group">
                 <label asp-for="Planta.frecuenciaRiego" class="control-label">Frecuencia de Riego</label>
                 <input asp-for="Planta.frecuenciaRiego" class="form-control" id="riegoPlanta" />
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label>Imagen</label>
-                <input asp-for="Imagen" class="form-control"/>
+                <input asp-for="Imagen" type="file" class="form-control" id="fotoP" /> 
             </div>
             <div class="form-group">
                 <select name="idTipoPlanta" id="idTipoPlanta">
@@ -92,6 +92,61 @@
     }
 </style>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        <script>
+            document.querySelector("#crearPlanta").addEventListener('submit', agregar)
+
+            function agregar(evento) {
+            evento.preventDefault();
+
+                let nombre = document.querySelector("#nombrePlanta").value;
+                let descripcionTipo = document.querySelector("#descripcionPlanta").value;
+                //let altM = Number(document.querySelector("#alturaMax")).value;
+                //let riegoP = document.querySelector("#riegoPlanta").value;
+                //let temp = Number(document.querySelector("#tempPlanta")).value;
+                let nombresV = document.querySelector("#nombresVulgares").value;
+                let fotoPl = document.querySelector("#fotoP").value; //agregue arriba el type="file" para el formato archivo
+
+                descripcionTipo = descripcionTipo.trim();
+                nombre = nombre.trim();
+                nombresV = nombre.trim();
+                let nombreConNum = false;
+
+                if (nombre != "" && descripcionTipo != "" && nombresV != "") {
+
+                if (nombre.charAt(0) != " " && nombre.charAt(nombre.length - 1) != " ") {
+
+                    nombre = nombre.replace(" ", "_");
+
+                    for (let i = 0; i < nombre.length; i++) {
+                        if (Number(nombre[i]) >= 0 || Number(nombre[i]) <= 9) {
+                            nombreConNum = true;
+                            break;
+                        }
+                    }
+                    if (!nombreConNum) {
+                        if (descripcionTipo.length >= 10 && descripcionTipo.length <= 500) {
+                            document.querySelector("#pMensaje").innerHTML = "";
+                            this.submit();
+                        }
+                        else {
+                            document.querySelector("#pMensaje").innerHTML = "El campo descripción debe estar entre 10 y 500 caracteres.";
+                        }
+                    }
+                    else {
+                        document.querySelector("#pMensaje").innerHTML = "El nombre de la Planta tiene números, verifíquelo.";
+                    }
+
+                }
+                else {
+                    document.querySelector("#pMensaje").innerHTML = "El nombre de la Planta tiene espacios al principio o al final, verifíquelo.";
+                }
+
+            } else {
+                document.querySelector("#pMensaje").innerHTML = "Complete todos los campos.";
+            }
+        }
+
+        </script>
+
+    }

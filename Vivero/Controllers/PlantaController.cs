@@ -384,7 +384,7 @@ namespace Vivero.Controllers
                         }
                         else
                         {
-                            throw new Exception("El nombre de la Planta tiene espacios embebidos o tiene números, verifíquelo.");
+                            throw new Exception("El nombre de la Planta tiene espacios al principio o final y/o tiene números, verifíquelo.");
                         }
                     }                    
                 }
