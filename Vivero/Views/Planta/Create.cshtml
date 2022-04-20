@@ -77,6 +77,8 @@
             <div class="form-group">
                 <input type="submit" value="Insertar" class="btn btn-primary" />
             </div>
+            <input type="number" class="form-control" id="MinimoDesc" name="MinimoDesc" value="10" readonly hidden/>
+            <input type="number" class="form-control" id="MaximoDesc" name="MaximoDesc" value="500" readonly hidden/>
         </form>
     </div>
 </div>
@@ -110,6 +112,8 @@
             let idTipoPlanta = document.querySelector("#idTipoPlanta").value;
             let idTipoAmbiente = document.querySelector("#idTipoAmbiente").value;
             let idIluminacion = document.querySelector("#idIluminacion").value;
+            let MinimoDesc = document.querySelector("#MinimoDesc").value;
+            let MaximoDesc = document.querySelector("#MaximoDesc").value;
 
             descripcionTipo = descripcionTipo.trim();
             nombre = nombre.trim();
@@ -129,12 +133,12 @@
                         }
                     }
                     if (!nombreConNum) {
-                        if (descripcionTipo.length >= 10 && descripcionTipo.length <= 500) {
+                        if (descripcionTipo.length >= MinimoDesc && descripcionTipo.length <= MaximoDesc) {
                             document.querySelector("#pMensaje").innerHTML = "";
                             this.submit();
                         }
                         else {
-                            document.querySelector("#pMensaje").innerHTML = "El campo descripción debe estar entre 10 y 500 caracteres.";
+                            document.querySelector("#pMensaje").innerHTML = "El campo descripción debe tener entre " + MinimoDesc + " y " + MaximoDesc +" caracteres.";
                         }
                     }
                     else {
