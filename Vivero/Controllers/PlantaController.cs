@@ -98,8 +98,8 @@ namespace Vivero.Controllers
         public ActionResult BusqTipoPlanta()
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
-            {
-                MostrarTipoPlanta();
+            {                
+                MostrarPlantaAtributos();
                 return View();
             }
             else
@@ -127,48 +127,27 @@ namespace Vivero.Controllers
                         throw new Exception("No se encontraron coincidencias con ese criterio de búsqueda.");
                     }
                     else
-                    {
-                        MostrarTipoPlanta();
+                    {                        
+                        MostrarPlantaAtributos();
                         return View(plEncontradas);
                     }
 
                 }
             }
             catch (Exception ex)
-            {
-                MostrarTipoPlanta();
+            {                
+                MostrarPlantaAtributos();
                 ViewBag.Error = ex.Message;
                 return View();
             }
-        }
-
-        private void MostrarTipoPlanta()
-        {
-            ViewModelPlanta VMTipoPlantas = new ViewModelPlanta();
-            VMTipoPlantas.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
-            ViewBag.TipoPlantas = VMTipoPlantas.TipoPlanta;
-        }
-
-        private void MostrarTipoAmbiente()
-        {
-            ViewModelPlanta VMTipoAmbiente = new ViewModelPlanta();
-            VMTipoAmbiente.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
-            ViewBag.TipoAmbientes = VMTipoAmbiente.TipoAmbiente;
-        }
-
-        private void MostrarIluminacion()
-        {
-            ViewModelPlanta VMIluminacion = new ViewModelPlanta();
-            VMIluminacion.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
-            ViewBag.Iluminaciones = VMIluminacion.Iluminacion;
-        }        
+        }                    
 
         //busqueda por tipo de ambiente
         public ActionResult BusqTipoAmbiente()
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
-                MostrarTipoAmbiente();
+                MostrarPlantaAtributos();
                 return View();
             }
             else
@@ -197,14 +176,14 @@ namespace Vivero.Controllers
                     }
                     else
                     {
-                        MostrarTipoAmbiente();
+                        MostrarPlantaAtributos();
                         return View(plEncontradas);
                     }                    
                 }
             }
             catch (Exception ex)
             {
-                MostrarTipoAmbiente();
+                MostrarPlantaAtributos();
                 ViewBag.Error = ex.Message;
                 return View();
             }
@@ -458,6 +437,16 @@ namespace Vivero.Controllers
             {
                 return View();
             }
+        }
+        private void MostrarPlantaAtributos()
+        {
+            ViewModelPlanta VMPlantasAtr = new ViewModelPlanta();
+            VMPlantasAtr.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
+            ViewBag.TipoPlantas = VMPlantasAtr.TipoPlanta;
+            VMPlantasAtr.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
+            ViewBag.TipoAmbientes = VMPlantasAtr.TipoAmbiente;
+            VMPlantasAtr.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
+            ViewBag.Iluminaciones = VMPlantasAtr.Iluminacion;
         }
     }
 }
