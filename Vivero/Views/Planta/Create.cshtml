@@ -124,7 +124,7 @@
 
                 if (nombre.charAt(0) != " " && nombre.charAt(nombre.length - 1) != " ") {
 
-                    nombre = nombre.trim();
+                    nombre = nombre.replaceAll(" ", "_");
 
                     for (let i = 0; i < nombre.length; i++) {
                         if (Number(nombre[i]) >= 0 || Number(nombre[i]) <= 9) {
