@@ -336,6 +336,7 @@ namespace Vivero.Controllers
         {
             try
             {
+                VMPlanta.Planta.nombreCientifico = VMPlanta.Planta.nombreCientifico.Trim();
                 bool validarNewTp = VMPlanta.Planta.Validar();
 
                 if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0 && VMPlanta.Foto!=null)  
@@ -353,23 +354,38 @@ namespace Vivero.Controllers
                                 bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta);
                                 if (descripcionValida)
                                 {
-                                    
-                                    string nomArchivo = VMPlanta.Foto.FileName;                                    
-                                    VMPlanta.Planta.foto = nomArchivo;
-                                    bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta,VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
-                                    if (altaTP)
-                                    {
-                                        string rutaRaiz = WebHostEnvironment.WebRootPath;
-                                        string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
-                                        string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
-                                        FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
-                                        VMPlanta.Foto.CopyTo(stream);
-                                        return RedirectToAction(nameof(Index));
+                                    if (VMPlanta.Foto.ContentType == "image/jpeg" || VMPlanta.Foto.ContentType == "image/png") {
+                                        string extension;
+                                        if (VMPlanta.Foto.ContentType == "image/jpeg")
+                                        {
+                                            extension = ".jpg";
+                                        }
+                                        else
+                                        {
+                                            extension = ".png";
+                                        }
+                                        string nomArchivo = VMPlanta.Planta.nombreCientifico.Replace(" ","_") + "_001"+extension;
+                                        VMPlanta.Planta.foto = nomArchivo;
+                                        bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta, VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
+                                        if (altaTP)
+                                        {
+                                            string rutaRaiz = WebHostEnvironment.WebRootPath;
+                                            string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
+                                            string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
+                                            FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
+                                            VMPlanta.Foto.CopyTo(stream);
+                                            return RedirectToAction(nameof(Index));
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                        }
                                     }
                                     else
                                     {
-                                        throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                        throw new Exception("El archivo de la foto subida no es válida, tiene que ser extensión jpeg o png.");
                                     }
+                                    
                                 }
                                 else
                                 {

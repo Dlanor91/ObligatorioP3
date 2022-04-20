@@ -9,7 +9,7 @@
 <h3>Insertar una nueva Planta</h3>
 <hr />
 <div class="row">
-    <div class="col-md-4">      
+    <div class="col-md-4">
 
         <form asp-action="Create" enctype="multipart/form-data" id="crearPlanta">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -24,7 +24,7 @@
                 <span asp-validation-for="Planta.descripcionPlanta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Planta.alturaMax" class="control-label">Altura </label>
+                <label asp-for="Planta.alturaMax" class="control-label">Altura (cm)</label>
                 <input asp-for="Planta.alturaMax" class="form-control" id="alturaMax" />
                 <span asp-validation-for="Planta.alturaMax" class="text-danger"></span>
             </div>
@@ -34,7 +34,7 @@
                 <span asp-validation-for="Planta.frecuenciaRiego" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Planta.temperatura" class="control-label">Temperatura </label>
+                <label asp-for="Planta.temperatura" class="control-label">Temperatura (°C)</label>
                 <input asp-for="Planta.temperatura" class="form-control" id="tempPlanta" />
                 <span asp-validation-for="Planta.temperatura" class="text-danger"></span>
             </div>
@@ -44,8 +44,8 @@
                 <span asp-validation-for="Planta.nombresVulgares" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Imagen</label> 
-                <input asp-for="Foto" class="form-control"  id="fotoP"/>
+                <label>Imagen</label>
+                <input asp-for="Foto" class="form-control" id="fotoP" />
             </div>
             <div class="form-group">
                 <select name="idTipoPlanta" id="idTipoPlanta">
@@ -94,29 +94,29 @@
 </style>
 
 @section Scripts {
-        <script>
-            document.querySelector("#crearPlanta").addEventListener('submit', agregar)
+    <script>
+        document.querySelector("#crearPlanta").addEventListener('submit', agregar)
 
-            function agregar(evento) {
+        function agregar(evento) {
             evento.preventDefault();
 
-                let nombre = document.querySelector("#nombrePlanta").value;
-                let descripcionTipo = document.querySelector("#descripcionPlanta").value;
-                let altM = Number(document.querySelector("#alturaMax").value);
-                let riegoP = document.querySelector("#riegoPlanta").value;
-                let temp = Number(document.querySelector("#tempPlanta").value);
-                let nombresV = document.querySelector("#nombresVulgares").value;
-                let fotoPl = document.querySelector("#fotoP").value;
-                let idTipoPlanta = document.querySelector("#idTipoPlanta").value;
-                let idTipoAmbiente = document.querySelector("#idTipoAmbiente").value;
-                let idIluminacion = document.querySelector("#idIluminacion").value;
+            let nombre = document.querySelector("#nombrePlanta").value;
+            let descripcionTipo = document.querySelector("#descripcionPlanta").value;
+            let altM = Number(document.querySelector("#alturaMax").value);
+            let riegoP = document.querySelector("#riegoPlanta").value;
+            let temp = Number(document.querySelector("#tempPlanta").value);
+            let nombresV = document.querySelector("#nombresVulgares").value;
+            let fotoPl = document.querySelector("#fotoP").value;
+            let idTipoPlanta = document.querySelector("#idTipoPlanta").value;
+            let idTipoAmbiente = document.querySelector("#idTipoAmbiente").value;
+            let idIluminacion = document.querySelector("#idIluminacion").value;
 
-                descripcionTipo = descripcionTipo.trim();
-                nombre = nombre.trim();
-                nombresV = nombre.trim();
-                let nombreConNum = false;
+            descripcionTipo = descripcionTipo.trim();
+            nombre = nombre.trim();
+            nombresV = nombre.trim();
+            let nombreConNum = false;
 
-                if (nombre != "" && descripcionTipo != "" && nombresV != "" && altM > 0 && riegoP != "" && temp != "" && fotoPl != "" && idTipoPlanta != 0 && idTipoAmbiente != 0 && idIluminacion != "") {
+            if (nombre != "" && descripcionTipo != "" && nombresV != "" && altM > 0 && riegoP != "" && temp != "" && fotoPl != "" && idTipoPlanta != 0 && idTipoAmbiente != 0 && idIluminacion != "") {
 
                 if (nombre.charAt(0) != " " && nombre.charAt(nombre.length - 1) != " ") {
 
@@ -151,5 +151,5 @@
             }
         }
 
-        </script>
+    </script>
 }
