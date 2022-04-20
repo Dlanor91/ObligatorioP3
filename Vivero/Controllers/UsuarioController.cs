@@ -148,17 +148,6 @@ namespace Vivero.Controllers
             }
             
         }
-        public IActionResult Register()
-        {
-            if (HttpContext.Session.GetString("datosNombreUsuario") == null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
         public IActionResult CerrarSession()
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
