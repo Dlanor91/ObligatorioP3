@@ -23,10 +23,10 @@ namespace Dominio.EntidadesVivero
             return valido;
         }
                
-        public bool ValidarDescripcion(string descripcion)
+        public bool ValidarDescripcion(string descripcion, int minimoDesc, int maxDesc)
         {
             bool descripcionValida = false;
-            if (descripcion.Length>=10 && descripcion.Length<=200) {
+            if (descripcion.Length>=minimoDesc && descripcion.Length<=maxDesc) {
                 descripcionValida = true;
             } 
             return descripcionValida;

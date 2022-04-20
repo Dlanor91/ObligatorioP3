@@ -77,8 +77,8 @@
             <div class="form-group">
                 <input type="submit" value="Insertar" class="btn btn-primary" />
             </div>
-            <input type="number" class="form-control" id="MinimoDesc" name="MinimoDesc" value="10" readonly hidden/>
-            <input type="number" class="form-control" id="MaximoDesc" name="MaximoDesc" value="500" readonly hidden/>
+            <input type="number" class="form-control" id="minimaDesc" name="minimaDesc" value="10" readonly hidden />
+            <input type="number" class="form-control" id="maximaDesc" name="maximaDesc" value="500" readonly hidden />
         </form>
     </div>
 </div>
@@ -94,6 +94,7 @@
         resize: none;
     }
 </style>
+
 
 @section Scripts {
     <script>
@@ -112,8 +113,8 @@
             let idTipoPlanta = document.querySelector("#idTipoPlanta").value;
             let idTipoAmbiente = document.querySelector("#idTipoAmbiente").value;
             let idIluminacion = document.querySelector("#idIluminacion").value;
-            let MinimoDesc = document.querySelector("#MinimoDesc").value;
-            let MaximoDesc = document.querySelector("#MaximoDesc").value;
+            let MinimoDesc = document.querySelector("#minimaDesc").value;
+            let MaximoDesc = document.querySelector("#maximaDesc").value;
 
             descripcionTipo = descripcionTipo.trim();
             nombre = nombre.trim();
@@ -138,7 +139,7 @@
                             this.submit();
                         }
                         else {
-                            document.querySelector("#pMensaje").innerHTML = "El campo descripción debe tener entre " + MinimoDesc + " y " + MaximoDesc +" caracteres.";
+                            document.querySelector("#pMensaje").innerHTML = "El campo descripción debe tener entre " + MinimoDesc + " y " + MaximoDesc + " caracteres.";
                         }
                     }
                     else {

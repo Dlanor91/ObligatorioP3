@@ -332,7 +332,7 @@ namespace Vivero.Controllers
         // POST: PlantaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModelPlanta VMPlanta)
+        public ActionResult Create(ViewModelPlanta VMPlanta, int minimaDesc, int maximaDesc)
         {
             try
             {
@@ -351,7 +351,7 @@ namespace Vivero.Controllers
                             bool existeNombre = ManejadorPlanta.verificarNombreC(VMPlanta.Planta.nombreCientifico);
                             if (!existeNombre)
                             {
-                                bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta);
+                                bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta, minimaDesc, maximaDesc);
                                 if (descripcionValida)
                                 {
                                     if (VMPlanta.Foto.ContentType == "image/jpeg" || VMPlanta.Foto.ContentType == "image/png") {
@@ -388,8 +388,8 @@ namespace Vivero.Controllers
                                     
                                 }
                                 else
-                                {
-                                    throw new Exception("El campo descripción debe estar entre 10 y 500 caracteres.");
+                                { 
+                                    throw new Exception("El campo descripción debe estar entre " + minimaDesc + " y " + maximaDesc + " caracteres.");
                                 }
                             }
                             else

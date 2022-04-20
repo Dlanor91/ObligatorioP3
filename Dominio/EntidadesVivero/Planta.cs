@@ -41,11 +41,11 @@ namespace Dominio.EntidadesVivero
         }
 
 
-        public bool ValidarDescripcion(string descripcion)
+        public bool ValidarDescripcion(string descripcion, int minimoDesc, int maxDesc)
         {
             bool descripcionValida = false;
 
-            if (descripcion.Length >= 10 && descripcion.Length <= 500)
+            if (descripcion.Length >= minimoDesc && descripcion.Length <= maxDesc)
             {
                 descripcionValida = true;
             }
