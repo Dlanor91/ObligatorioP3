@@ -295,12 +295,9 @@ namespace Vivero.Controllers
         public ActionResult Create()
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
-            {
-                ViewModelPlanta VMPlanta = new ViewModelPlanta();
-                VMPlanta.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
-                VMPlanta.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
-                VMPlanta.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
-                return View(VMPlanta);
+            {                
+                MostrarPlantaAtributos();
+                return View() ;
             }
             else
             {
@@ -314,8 +311,7 @@ namespace Vivero.Controllers
         public ActionResult Create(ViewModelPlanta VMPlanta, int minimaDesc, int maximaDesc)
         {
             try
-            {
-                VMPlanta.Planta.nombreCientifico = VMPlanta.Planta.nombreCientifico.Trim();
+            {                
                 bool validarNewTp = VMPlanta.Planta.Validar();
 
                 if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0 && VMPlanta.Foto!=null)  
@@ -327,9 +323,12 @@ namespace Vivero.Controllers
                         bool errorNombre = VMPlanta.Planta.ValidarFormatoNombre(VMPlanta.Planta.nombreCientifico);
                         if (!errorNombre)
                         {
+                            VMPlanta.Planta.nombreCientifico = VMPlanta.Planta.nombreCientifico.Trim();
                             bool existeNombre = ManejadorPlanta.verificarNombreC(VMPlanta.Planta.nombreCientifico);
                             if (!existeNombre)
                             {
+                                VMPlanta.Planta.descripcionPlanta = VMPlanta.Planta.descripcionPlanta.Trim();
+                                VMPlanta.Planta.nombresVulgares = VMPlanta.Planta.nombresVulgares.Trim();
                                 bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta, minimaDesc, maximaDesc);
                                 if (descripcionValida)
                                 {
@@ -389,11 +388,10 @@ namespace Vivero.Controllers
             }
             catch (Exception ex)            
             {                
-                VMPlanta.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
-                VMPlanta.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
-                VMPlanta.TipoPlanta = ManejadorPlanta.TraerTodosTiposPlantas();
+                MostrarPlantaAtributos();
                 ViewBag.Error = ex.Message;
-                return View(VMPlanta);
+                
+                return View();
             }
         }
 

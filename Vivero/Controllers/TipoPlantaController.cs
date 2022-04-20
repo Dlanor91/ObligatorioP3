@@ -120,9 +120,11 @@ namespace Vivero.Controllers
                     bool errorNombre = tpNew.ValidarFormatoNombre(tpNew.nombre);
                     if (!errorNombre)
                     {
+                        tpNew.nombre = tpNew.nombre.Trim();
                         bool existeNombre = ManejadorTipoPlantas.ValidarNombreUnico(tpNew.nombre);
                         if (!existeNombre)                        
                         {
+                            tpNew.descripcionTipo = tpNew.descripcionTipo.Trim();
                             bool descripcionValida = tpNew.ValidarDescripcion(tpNew.descripcionTipo,10,200);
                             if (descripcionValida)
                             {

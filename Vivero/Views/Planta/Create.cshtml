@@ -50,7 +50,7 @@
             <div class="form-group">
                 <select name="idTipoPlanta" id="idTipoPlanta">
                     <option value="0">Seleccione Tipo de Planta</option>
-                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in Model.TipoPlanta)
+                    @foreach (Dominio.EntidadesVivero.TipoPlanta tp in ViewBag.TipoPlantas)
                     {
                         <option value="@tp.id">@tp.nombre</option>
                     }
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <select name="idTipoAmbiente" id="idTipoAmbiente">
                     <option value="0">Seleccione Tipo de Ambiente</option>
-                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in Model.TipoAmbiente)
+                    @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in ViewBag.TipoAmbientes)
                     {
                         <option value="@ta.id">@ta.tipoAmbiente</option>
                     }
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <select name="idIluminacion" id="idIluminacion">
                     <option value="0">Seleccione Tipo de Planta</option>
-                    @foreach (Dominio.EntidadesVivero.Iluminacion ilu in Model.Iluminacion)
+                    @foreach (Dominio.EntidadesVivero.Iluminacion ilu in ViewBag.Iluminaciones)
                     {
                         <option value="@ilu.id">@ilu.tipoIluminacion</option>
                     }
@@ -116,16 +116,15 @@
             let MinimoDesc = document.querySelector("#minimaDesc").value;
             let MaximoDesc = document.querySelector("#maximaDesc").value;
 
-            descripcionTipo = descripcionTipo.trim();
-            nombre = nombre.trim();
-            nombresV = nombre.trim();
+            descripcionTipo = descripcionTipo.trim();            
+            nombresV = nombresV.trim();
             let nombreConNum = false;
 
             if (nombre != "" && descripcionTipo != "" && nombresV != "" && altM > 0 && riegoP != "" && temp != "" && fotoPl != "" && idTipoPlanta != 0 && idTipoAmbiente != 0 && idIluminacion != "") {
 
                 if (nombre.charAt(0) != " " && nombre.charAt(nombre.length - 1) != " ") {
 
-                    nombre = nombre.replace(" ", "_");
+                    nombre = nombre.trim();
 
                     for (let i = 0; i < nombre.length; i++) {
                         if (Number(nombre[i]) >= 0 || Number(nombre[i]) <= 9) {
