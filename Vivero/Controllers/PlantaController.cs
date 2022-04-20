@@ -338,7 +338,7 @@ namespace Vivero.Controllers
             {
                 bool validarNewTp = VMPlanta.Planta.Validar();
 
-                if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0)  
+                if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0 && VMPlanta.Foto!=null)  
                 {
                     if (VMPlanta.Planta.alturaMax <= 0) {
                         throw new Exception("La altura máxima no puede ser menor que 0cm.");
