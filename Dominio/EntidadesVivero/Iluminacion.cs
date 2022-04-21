@@ -9,5 +9,5 @@ namespace Dominio.EntidadesVivero
 		public int id { get; set; }
 
 		public string tipoIluminacion { get; set; }
-	}
+    }
 }
