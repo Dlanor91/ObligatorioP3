@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label class="control-label">Frecuencia de Riego</label>
                 <input type="number" class="form-control" id="cantDiasRiego" name="cantDiasRiego" /><br />
-                <select name="frecSeleccionada" id="frecSeleccionada">
+                <select name="frecSeleccionada" id="frecSeleccionada" class="control-label">
                     <option value="0">Seleccione la Frecuencia de Riego</option>
                     <option value="Día">Día</option>
                     <option value="Semana">Semana</option>
@@ -54,7 +54,7 @@
                 <input asp-for="Foto" class="form-control" id="fotoP" />
             </div>
             <div class="form-group">
-                <select name="idTipoPlanta" id="idTipoPlanta">
+                <select name="idTipoPlanta" id="idTipoPlanta" class="control-label">
                     <option value="0">Seleccione Tipo de Planta</option>
                     @foreach (Dominio.EntidadesVivero.TipoPlanta tp in ViewBag.TipoPlantas)
                     {
@@ -63,7 +63,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <select name="idTipoAmbiente" id="idTipoAmbiente">
+                <select name="idTipoAmbiente" id="idTipoAmbiente" class="control-label">
                     <option value="0">Seleccione Tipo de Ambiente</option>
                     @foreach (Dominio.EntidadesVivero.TipoAmbiente ta in ViewBag.TipoAmbientes)
                     {
@@ -72,7 +72,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <select name="idIluminacion" id="idIluminacion">
+                <select name="idIluminacion" id="idIluminacion" class="control-label">
                     <option value="0">Seleccione Tipo de Iluminación</option>
                     @foreach (Dominio.EntidadesVivero.Iluminacion ilu in ViewBag.Iluminaciones)
                     {
