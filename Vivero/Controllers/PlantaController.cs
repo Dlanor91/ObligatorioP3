@@ -30,7 +30,7 @@ namespace Vivero.Controllers
         {
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
-                IEnumerable<Planta> pl = ManejadorPlanta.MostrarTodasPlantas();
+                IEnumerable<Planta> pl = ManejadorPlanta.MostrarTodasPlantas();                               
                 return View(pl);
             }
             else
@@ -303,83 +303,97 @@ namespace Vivero.Controllers
         // POST: PlantaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModelPlanta VMPlanta, int minimaDesc, int maximaDesc)
+        public ActionResult Create(ViewModelPlanta VMPlanta,int cantDiasRiego,string frecSeleccionada, int minimaDesc, int maximaDesc)
         {
             try
-            {                
-                bool validarNewTp = VMPlanta.Planta.Validar();
+            {
+                if (cantDiasRiego>0 && frecSeleccionada !="0") {
+                    if (cantDiasRiego == 1) {
+                        VMPlanta.Planta.frecuenciaRiego = cantDiasRiego + " vez por " + frecSeleccionada;
+                    } else {                    
+                        VMPlanta.Planta.frecuenciaRiego = cantDiasRiego + " veces por " + frecSeleccionada;
+                    }
 
-                if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0 && VMPlanta.Foto!=null)  
-                {
-                    if (VMPlanta.Planta.alturaMax <= 0) {
-                        throw new Exception("La altura máxima no puede ser menor que 0cm.");
-                    } 
-                    else {
-                        bool errorNombre = VMPlanta.Planta.ValidarFormatoNombre(VMPlanta.Planta.nombreCientifico);
-                        if (!errorNombre)
+                    bool validarNewTp = VMPlanta.Planta.Validar();
+
+                    if (validarNewTp && VMPlanta.idIluminacion != 0 && VMPlanta.idTipoAmbiente != 0 && VMPlanta.idTipoPlanta != 0 && VMPlanta.Foto!=null)
+                    {
+                        if (VMPlanta.Planta.alturaMax <= 0)
                         {
-                            VMPlanta.Planta.nombreCientifico = VMPlanta.Planta.nombreCientifico.Trim();
-                            bool existeNombre = ManejadorPlanta.verificarNombreC(VMPlanta.Planta.nombreCientifico);
-                            if (!existeNombre)
+                            throw new Exception("La altura máxima no puede ser menor que 0cm.");
+                        }
+                        else
+                        {
+                            bool errorNombre = VMPlanta.Planta.ValidarFormatoNombre(VMPlanta.Planta.nombreCientifico);
+                            if (!errorNombre)
                             {
-                                VMPlanta.Planta.descripcionPlanta = VMPlanta.Planta.descripcionPlanta.Trim();
-                                VMPlanta.Planta.nombresVulgares = VMPlanta.Planta.nombresVulgares.Trim();
-                                bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta, minimaDesc, maximaDesc);
-                                if (descripcionValida)
+                                VMPlanta.Planta.nombreCientifico = VMPlanta.Planta.nombreCientifico.Trim();
+                                bool existeNombre = ManejadorPlanta.verificarNombreC(VMPlanta.Planta.nombreCientifico);
+                                if (!existeNombre)
                                 {
-                                    if (VMPlanta.Foto.ContentType == "image/jpeg" || VMPlanta.Foto.ContentType == "image/png") {
-                                        string extension;
-                                        if (VMPlanta.Foto.ContentType == "image/jpeg")
+                                    VMPlanta.Planta.descripcionPlanta = VMPlanta.Planta.descripcionPlanta.Trim();
+                                    VMPlanta.Planta.nombresVulgares = VMPlanta.Planta.nombresVulgares.Trim();
+                                    bool descripcionValida = VMPlanta.Planta.ValidarDescripcion(VMPlanta.Planta.descripcionPlanta, minimaDesc, maximaDesc);
+                                    if (descripcionValida)
+                                    {
+                                        if (VMPlanta.Foto.ContentType == "image/jpeg" || VMPlanta.Foto.ContentType == "image/png")
                                         {
-                                            extension = ".jpg";
+                                            string extension;
+                                            if (VMPlanta.Foto.ContentType == "image/jpeg")
+                                            {
+                                                extension = ".jpg";
+                                            }
+                                            else
+                                            {
+                                                extension = ".png";
+                                            }
+                                            string nomArchivo = VMPlanta.Planta.nombreCientifico.Replace(" ", "_") + "_001"+extension;
+                                            VMPlanta.Planta.foto = nomArchivo;
+                                            bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta, VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
+                                            if (altaTP)
+                                            {
+                                                string rutaRaiz = WebHostEnvironment.WebRootPath;
+                                                string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
+                                                string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
+                                                FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
+                                                VMPlanta.Foto.CopyTo(stream);
+                                                return RedirectToAction(nameof(Index));
+                                            }
+                                            else
+                                            {
+                                                throw new Exception("No fue posible el alta de esta nueva Planta.");
+                                            }
                                         }
                                         else
                                         {
-                                            extension = ".png";
+                                            throw new Exception("El archivo de la foto subida no es válida, tiene que ser extensión jpeg o png.");
                                         }
-                                        string nomArchivo = VMPlanta.Planta.nombreCientifico.Replace(" ","_") + "_001"+extension;
-                                        VMPlanta.Planta.foto = nomArchivo;
-                                        bool altaTP = ManejadorPlanta.AgregarPlanta(VMPlanta.Planta, VMPlanta.idTipoPlanta, VMPlanta.idTipoAmbiente, VMPlanta.idIluminacion);
-                                        if (altaTP)
-                                        {
-                                            string rutaRaiz = WebHostEnvironment.WebRootPath;
-                                            string rutaImagenes = Path.Combine(rutaRaiz, "img");//aqui lo une solo sin ver orden e imagenes es la carpeta de imagenes
-                                            string rutaArchivo = Path.Combine(rutaImagenes, nomArchivo);
-                                            FileStream stream = new FileStream(rutaArchivo, FileMode.Create); //para hacer la ruta un stream
-                                            VMPlanta.Foto.CopyTo(stream);
-                                            return RedirectToAction(nameof(Index));
-                                        }
-                                        else
-                                        {
-                                            throw new Exception("No fue posible el alta de esta nueva Planta.");
-                                        }
+
                                     }
                                     else
                                     {
-                                        throw new Exception("El archivo de la foto subida no es válida, tiene que ser extensión jpeg o png.");
+                                        throw new Exception("El campo descripción debe estar entre " + minimaDesc + " y " + maximaDesc + " caracteres.");
                                     }
-                                    
                                 }
                                 else
-                                { 
-                                    throw new Exception("El campo descripción debe estar entre " + minimaDesc + " y " + maximaDesc + " caracteres.");
+                                {
+                                    throw new Exception("El nombre de la Planta ya existe en la base de datos, ingrese otro.");
                                 }
                             }
                             else
                             {
-                                throw new Exception("El nombre de la Planta ya existe en la base de datos, ingrese otro.");
+                                throw new Exception("El nombre de la Planta tiene espacios al principio o final y/o tiene números, verifíquelo.");
                             }
                         }
-                        else
-                        {
-                            throw new Exception("El nombre de la Planta tiene espacios al principio o final y/o tiene números, verifíquelo.");
-                        }
-                    }                    
+                    }
+                    else
+                    {
+                        throw new Exception("Complete todos los campos.");
+                    }
+                } else {
+                    throw new Exception("La frecuencia de riego no puede ser negativa.");
                 }
-                else
-                {
-                    throw new Exception("Complete todos los campos.");
-                }
+                
             }
             catch (Exception ex)            
             {                
@@ -398,7 +412,7 @@ namespace Vivero.Controllers
             VMPlantasAtr.TipoAmbiente = ManejadorPlanta.TraerTodosTiposAmbientes();
             ViewBag.TipoAmbientes = VMPlantasAtr.TipoAmbiente;
             VMPlantasAtr.Iluminacion = ManejadorPlanta.TraerTodosIluminaciones();
-            ViewBag.Iluminaciones = VMPlantasAtr.Iluminacion;
+            ViewBag.Iluminaciones = VMPlantasAtr.Iluminacion;            
         }
     }
 }

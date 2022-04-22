@@ -9,7 +9,7 @@ namespace Vivero.Models
 {
     public class ViewModelPlanta
     {
-        public Planta Planta { get; set; }
+        public Planta Planta { get; set; }        
         public IEnumerable<TipoPlanta> TipoPlanta { get; set; }
         public IEnumerable<TipoAmbiente> TipoAmbiente { get; set; }
         public IEnumerable<Iluminacion> Iluminacion { get; set; }

@@ -24,14 +24,20 @@
                 <span asp-validation-for="Planta.descripcionPlanta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Planta.alturaMax" class="control-label">Altura (cm)</label>
+                <label asp-for="Planta.alturaMax" class="control-label">Altura Máxima (cm)</label>
                 <input type="number" asp-for="Planta.alturaMax" class="form-control" id="alturaMax" />
                 <span asp-validation-for="Planta.alturaMax" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Planta.frecuenciaRiego" class="control-label">Frecuencia de Riego</label>
-                <input asp-for="Planta.frecuenciaRiego" class="form-control" id="riegoPlanta" />
-                <span asp-validation-for="Planta.frecuenciaRiego" class="text-danger"></span>
+                <label class="control-label">Frecuencia de Riego</label>
+                <input type="number" class="form-control" id="cantDiasRiego" name="cantDiasRiego" /><br />
+                <select name="frecSeleccionada" id="frecSeleccionada">
+                    <option value="0">Seleccione la Frecuencia de Riego</option>
+                    <option value="Día">Día</option>
+                    <option value="Semana">Semana</option>
+                    <option value="Mes">Mes</option>
+                    <option value="Año">Año</option>
+                </select>                
             </div>
             <div class="form-group">
                 <label asp-for="Planta.temperatura" class="control-label">Temperatura (°C)</label>
@@ -67,7 +73,7 @@
             </div>
             <div class="form-group">
                 <select name="idIluminacion" id="idIluminacion">
-                    <option value="0">Seleccione Tipo de Planta</option>
+                    <option value="0">Seleccione Tipo de Iluminación</option>
                     @foreach (Dominio.EntidadesVivero.Iluminacion ilu in ViewBag.Iluminaciones)
                     {
                         <option value="@ilu.id">@ilu.tipoIluminacion</option>
@@ -106,13 +112,14 @@
             let nombre = document.querySelector("#nombrePlanta").value;
             let descripcionTipo = document.querySelector("#descripcionPlanta").value;
             let altM = Number(document.querySelector("#alturaMax").value);
-            let riegoP = document.querySelector("#riegoPlanta").value;
+            let riegoP = Number(document.querySelector("#cantDiasRiego").value);
+            let frecSeleccionada = document.querySelector("#frecSeleccionada").value;
             let temp = Number(document.querySelector("#tempPlanta").value);
             let nombresV = document.querySelector("#nombresVulgares").value;
             let fotoPl = document.querySelector("#fotoP").value;
-            let idTipoPlanta = document.querySelector("#idTipoPlanta").value;
-            let idTipoAmbiente = document.querySelector("#idTipoAmbiente").value;
-            let idIluminacion = document.querySelector("#idIluminacion").value;
+            let idTipoPlanta = Number(document.querySelector("#idTipoPlanta").value);
+            let idTipoAmbiente = Number(document.querySelector("#idTipoAmbiente").value);
+            let idIluminacion = Number(document.querySelector("#idIluminacion").value);
             let MinimoDesc = document.querySelector("#minimaDesc").value;
             let MaximoDesc = document.querySelector("#maximaDesc").value;
 
@@ -120,7 +127,7 @@
             nombresV = nombresV.trim();
             let nombreConNum = false;
 
-            if (nombre != "" && descripcionTipo != "" && nombresV != "" && altM > 0 && riegoP != "" && temp != "" && fotoPl != "" && idTipoPlanta != 0 && idTipoAmbiente != 0 && idIluminacion != "") {
+            if (nombre != "" && descripcionTipo != "" && nombresV != "" && altM > 0 && riegoP > 0 && frecSeleccionada!= "0" && temp != "" && fotoPl != "" && idTipoPlanta != 0 && idTipoAmbiente != 0 && idIluminacion != 0) {
 
                 if (nombre.charAt(0) != " " && nombre.charAt(nombre.length - 1) != " ") {
 
@@ -151,7 +158,7 @@
                 }
 
             } else {
-                document.querySelector("#pMensaje").innerHTML = "Complete todos los campos y altura máxima mayor que 0.";
+                document.querySelector("#pMensaje").innerHTML = "Complete todos los campos con campo altura máxima mayor que 0 y cantidad de días de riego mayor que 0 también.";
             }
         }
 

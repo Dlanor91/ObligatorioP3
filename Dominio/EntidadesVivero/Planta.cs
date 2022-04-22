@@ -26,7 +26,7 @@ namespace Dominio.EntidadesVivero
 
         public Iluminacion tipoIlumincacion { get; set; }
 
-        public string nombresVulgares { get; set; }
+        public string nombresVulgares { get; set; }       
 
         public bool Validar()
         {
