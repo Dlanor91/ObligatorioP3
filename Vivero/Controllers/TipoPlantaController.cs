@@ -29,6 +29,9 @@ namespace Vivero.Controllers
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
                 IEnumerable<TipoPlanta> tp = ManejadorTipoPlantas.MostrarTodosTiposPlantas();
+                if (TempData["pMensaje"] !=null) {
+                    ViewBag.Error = TempData["pMensaje"].ToString();
+                }
                 return View(tp);
             }
             else
@@ -220,7 +223,7 @@ namespace Vivero.Controllers
                 return View(tpEliminar);
             }
             else
-            {
+            {                
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -231,7 +234,7 @@ namespace Vivero.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             
-            // en caso positivo deuelve el objeto planta 
+            // en caso positivo devuelve el objeto planta 
             IEnumerable<Planta> existePlanta = ManejadorPlantas.buscarPlantasTipoPlanta(id);
                
             try
@@ -242,6 +245,7 @@ namespace Vivero.Controllers
                     bool eliminar = ManejadorTipoPlantas.eliminarTipoPlanta(id);
                     if (eliminar)
                     {
+                        TempData["pMensaje"] = "Tipo de Planta Eliminado Correctamente";
                         return RedirectToAction(nameof(Index));
 
                     }
