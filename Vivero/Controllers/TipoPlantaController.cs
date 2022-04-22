@@ -85,12 +85,6 @@ namespace Vivero.Controllers
            
         }
 
-        // GET: TipoPlantaController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: TipoPlantaController/Create
         public ActionResult Create()
         {

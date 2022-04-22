@@ -284,12 +284,7 @@ namespace Vivero.Controllers
                 return View();
             }
         }
-
-        // GET: PlantaController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+               
 
         // GET: PlantaController/Create
         public ActionResult Create()
@@ -394,48 +389,7 @@ namespace Vivero.Controllers
                 return View();
             }
         }
-
-        // GET: PlantaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: PlantaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PlantaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PlantaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+               
         private void MostrarPlantaAtributos()
         {
             ViewModelPlanta VMPlantasAtr = new ViewModelPlanta();
