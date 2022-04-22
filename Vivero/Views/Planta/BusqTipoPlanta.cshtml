@@ -47,10 +47,7 @@ else
                 </th>
                 <th>
                     Tipo de Ambiente
-                </th>
-                <th>
-                    Tipo de Planta
-                </th>
+                </th>               
                 <th>
                     Nombres Vulgares
                 </th>
@@ -76,10 +73,7 @@ else
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.tipoAmbiente.tipoAmbiente)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tipoPlanta.nombre)
-                    </td>
+                    </td>                   
                     <td>
                         @Html.DisplayFor(modelItem => item.nombresVulgares)
                     </td>
@@ -96,7 +90,7 @@ else
                             <div class="card card-body">
                                 <p>Frecuencia de Riego : @Html.DisplayFor(modelItem => item.frecuenciaRiego)</p>
                                 <p>Iluminación : @Html.DisplayFor(modelItem => item.tipoIlumincacion.tipoIluminacion)</p>
-                                <p>Temperatura(°C) : @Html.DisplayFor(modelItem => item.temperatura)</p>
+                                <p>Temperatura (°C) : @Html.DisplayFor(modelItem => item.temperatura)</p>
                             </div>
                         </div>
                     </td>
