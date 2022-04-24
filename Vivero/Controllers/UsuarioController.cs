@@ -77,7 +77,7 @@ namespace Vivero.Controllers
             if (HttpContext.Session.GetString("datosNombreUsuario") != null)
             {
                 HttpContext.Session.Clear();
-                return View();
+                return RedirectToAction("Login", "Usuario");
             }
             else
             {
